@@ -3,6 +3,21 @@
 
 using namespace std;
 
+void gray_scale(Image &image) {
+    for (int i = 0; i< image.width; i++) {
+        for (int j = 0; j<image.height; j++) {
+            unsigned int avg = 0;
+            for (int k = 0; k <image.channels; k++) {
+                avg += image(i, j, k);
+            }
+            avg/=3;
+            for (int k =0; k<3; k++) {
+                image(i, j, k) = avg;
+            }
+        }
+    }
+}
+
 void Black_White(Image& image) {
     int therhold = 128;
     for (int i = 0; i < image.width; i++)
@@ -55,6 +70,7 @@ Image resize_image(Image& image, int new_Width, int new_Height) {
     }
     return new_Image;
 }
+
 
 
 

@@ -99,8 +99,44 @@ Image merge_image(Image image1, Image image2) {
     return merged;
 }
 
-
-
+Image rotate(const Image &image, int angle)
+{
+    Image rotated = image;
+    switch (angle)
+    {
+    case 270:
+    {
+        Image newimage(image.height, image.width);
+        for (int i = 0; i < image.width; ++i)
+            for (int j = 0; j < image.height; ++j)
+                for (int k = 0; k < image.channels; ++k)
+                    newimage(j, image.width - 1 - i, k) = image(i, j, k);
+        rotated = newimage;
+        break;
+    }
+    case 180:
+    {
+        Image newimage(image.width, image.height);
+        for (int i = 0; i < image.width; ++i)
+            for (int j = 0; j < image.height; ++j)
+                for (int k = 0; k < image.channels; ++k)
+                    newimage(image.width - 1 - i, image.height - 1 - j, k) = image(i, j, k);
+        rotated = newimage;
+        break;
+    }
+    case 90:
+    {
+        Image newimage(image.height, image.width);
+        for (int i = 0; i < image.width; ++i)
+            for (int j = 0; j < image.height; ++j)
+                for (int k = 0; k < image.channels; ++k)
+                    newimage(image.height - 1 - j, i, k) = image(i, j, k);
+        rotated = newimage;
+        break;
+    }
+    }
+    return rotated;
+}
 
 int main(){
     cout << "Hello" << endl;

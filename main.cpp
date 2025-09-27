@@ -71,6 +71,21 @@ Image resize_image(Image& image, int new_Width, int new_Height) {
     return new_Image;
 }
 
+Image merge_image(Image image1, Image image2) {
+    int mx_width = max(image1.width, image2.width);
+    int mx_height = max(image1.height, image2.height);
+    image1 = resize_image(image1, mx_width, mx_height);
+    image2 = resize_image(image2, mx_width, mx_height);
+    Image merged(mx_width, mx_height);
+    for (int i =0; i<image1.width; i++) {
+        for (int j =0; j<image1.height; j++) {
+            for (int k = 0; k<3; k++) {
+                merged(i, j, k) = static_cast<unsigned int>(image1(i, j, k) + image2(i, j, k))/2;
+            }
+        }
+    }
+    return merged;
+}
 
 
 

@@ -51,7 +51,19 @@ void Black_White(Image& image) {
     }
 
 }
-
+void invert(Image &image)
+{
+    for (int i = 0; i < image.width; ++i)
+    {
+        for (int j = 0; j < image.height; ++j)
+        {
+            for (int k = 0; k < 3; ++k)
+            {
+                image(i, j, k) = 255 - image(i, j, k);
+            }
+        }
+    }
+}
 
 Image resize_image(Image& image, int new_Width, int new_Height) {
     Image new_Image(new_Width, new_Height);

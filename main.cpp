@@ -263,28 +263,38 @@ void save_image(string &filename, Image &image, int save_option)
     cout << "1- Save image on the same file\n"
             "2- Save image on a new file"
          << endl;
-    cin >> save_option;
-    if (save_option == 1)
+    cout << ">> Enter your choice (1-2): _" << endl;
+    while (true)
     {
-        image.saveImage(filename);
-    }
-    else if (save_option == 2)
-    {
-        bool saved = false;
-        string new_filename;
-        while (!saved)
+        cin >> save_option;
+        if (save_option == 1)
         {
-            cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
-            cin >> new_filename;
-            try
+            image.saveImage(filename);
+            break;
+        }
+        else if (save_option == 2)
+        {
+            bool saved = false;
+            string new_filename;
+            while (!saved)
             {
-                image.saveImage(new_filename);
-                saved = true;
+                cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+                cin >> new_filename;
+                try
+                {
+                    image.saveImage(new_filename);
+                    saved = true;
+                }
+                catch (invalid_argument &e)
+                {
+                    cout << "Error: " << e.what() << endl;
+                }
             }
-            catch (invalid_argument &e)
-            {
-                cout << "Error: " << e.what() << endl;
-            }
+            break;
+        }
+        else
+        {
+            cout << "Invalid Option." << endl;
         }
     }
     cout << ">>> Saved Successfully <<<" << endl;

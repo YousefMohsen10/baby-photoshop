@@ -1,24 +1,32 @@
 #include <iostream>
 #include "Image_Class.h"
-
+#include <stack>
 using namespace std;
 
-void gray_scale(Image &image) {
-    for (int i = 0; i< image.width; i++) {
-        for (int j = 0; j<image.height; j++) {
+void gray_scale(Image &image)
+{
+    cout << ">>> Applying gray scale filter to your image... <<<" << endl;
+    for (int i = 0; i < image.width; i++)
+    {
+        for (int j = 0; j < image.height; j++)
+        {
             unsigned int avg = 0;
-            for (int k = 0; k <image.channels; k++) {
+            for (int k = 0; k < image.channels; k++)
+            {
                 avg += image(i, j, k);
             }
-            avg/=3;
-            for (int k =0; k<3; k++) {
+            avg /= 3;
+            for (int k = 0; k < 3; k++)
+            {
                 image(i, j, k) = avg;
             }
         }
     }
 }
 
-void Black_White(Image& image) {
+void Black_White(Image &image)
+{
+    cout << ">>> Applying Black and White filter to your image... <<<" << endl;
     int therhold = 128;
     for (int i = 0; i < image.width; i++)
     {
@@ -37,22 +45,24 @@ void Black_White(Image& image) {
             {
                 image(i, j, channel) = avg;
             }
-            if (image(i, j, 0) >= therhold) {
+            if (image(i, j, 0) >= therhold)
+            {
                 image(i, j, 0) = 255;
                 image(i, j, 1) = 255;
                 image(i, j, 2) = 255;
             }
-            else {
+            else
+            {
                 image(i, j, 0) = 0;
                 image(i, j, 1) = 0;
                 image(i, j, 2) = 0;
             }
         }
     }
-
 }
 void invert(Image &image)
 {
+    cout << ">>> Applying invert filter to your image... <<<" << endl;
     for (int i = 0; i < image.width; ++i)
     {
         for (int j = 0; j < image.height; ++j)
@@ -65,17 +75,21 @@ void invert(Image &image)
     }
 }
 
-Image resize_image(Image& image, int new_Width, int new_Height) {
+Image resize_image(Image &image, int new_Width, int new_Height)
+{
     Image new_Image(new_Width, new_Height);
     float x_ratio = static_cast<float>(image.width) / new_Width;
     float y_ratio = static_cast<float>(image.height) / new_Height;
 
-    for (int i = 0; i < new_Width; i++) {
-        for (int j = 0; j < new_Height; j++) {
+    for (int i = 0; i < new_Width; i++)
+    {
+        for (int j = 0; j < new_Height; j++)
+        {
             int srcX = min(static_cast<int>(i * x_ratio), image.width - 1);
             int srcY = min(static_cast<int>(j * y_ratio), image.height - 1);
 
-            for (int channel = 0; channel < 3; channel++) {
+            for (int channel = 0; channel < 3; channel++)
+            {
                 new_Image(i, j, channel) = image(srcX, srcY, channel);
             }
         }
@@ -83,23 +97,27 @@ Image resize_image(Image& image, int new_Width, int new_Height) {
     return new_Image;
 }
 
-Image merge_image(Image image1, Image image2) {
+Image merge_image(Image image1, Image image2)
+{
     int mx_width = max(image1.width, image2.width);
     int mx_height = max(image1.height, image2.height);
     image1 = resize_image(image1, mx_width, mx_height);
     image2 = resize_image(image2, mx_width, mx_height);
     Image merged(mx_width, mx_height);
-    for (int i =0; i<image1.width; i++) {
-        for (int j =0; j<image1.height; j++) {
-            for (int k = 0; k<3; k++) {
-                merged(i, j, k) = static_cast<unsigned int>(image1(i, j, k) + image2(i, j, k))/2;
+    for (int i = 0; i < image1.width; i++)
+    {
+        for (int j = 0; j < image1.height; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                merged(i, j, k) = static_cast<unsigned int>(image1(i, j, k) + image2(i, j, k)) / 2;
             }
         }
     }
     return merged;
 }
 
-Image rotate(const Image &image, int angle)
+Image rotate(Image &image, int angle)
 {
     Image rotated = image;
     switch (angle)
@@ -138,7 +156,209 @@ Image rotate(const Image &image, int angle)
     return rotated;
 }
 
-int main(){
-    cout << "Hello" << endl;
+Image get_image(string &filename)
+{
+    cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+    cin >> filename;
+    Image image(filename);
+    try
+    {
+        image.loadNewImage(filename);
+    }
+    catch (invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    cout << "* SUCCESS: Image '" << filename << "' loaded successfully." << endl;
+    return image;
+}
+
+void save(Image &image, string save_name)
+{
+    image.saveImage(save_name);
+}
+
+void list_filter()
+{
+    cout << "--------------------------------------------------------------------------------" << endl;
+    cout << "                                  FILTER MENU" << endl;
+    cout << "--------------------------------------------------------------------------------" << endl;
+    cout << "Choose Filter:\n"
+            "1- Gray Scale\n"
+            "2- Black and White\n"
+            "3- Invert Image\n"
+            "4- Resize Image\n"
+            "5- Merge Image\n"
+            "6- Rotate\n"
+            "7- Undo last filter\n"
+            "8- Return to Main Menu"
+         << endl;
+    cout << ">> Enter filter number (1-8): _";
+}
+
+int get_width()
+{
+    int new_Width;
+    cout << "Enter NEW width: " << endl;
+    cin >> new_Width;
+    return new_Width;
+}
+int get_height()
+{
+    int new_Height;
+    cout << "Enter NEW height: " << endl;
+    cin >> new_Height;
+    return new_Height;
+}
+
+void resize_output(Image &img)
+{
+    cout << ">>> ACTION: Resize Image <<<" << endl;
+    int width = get_width();
+    int height = get_height();
+    img = resize_image(img, width, height);
+}
+
+Image merge_output(Image &image1, string &filename)
+{
+    Image image2 = get_image(filename);
+    Image merged = merge_image(image1, image2);
+    return merged;
+}
+
+Image rotate_output(Image image)
+{
+    int angle;
+    cout << "Enter rotation angle (90 / 180 / 270): ";
+    cin >> angle;
+    Image rotated = rotate(image, angle);
+    return rotated;
+}
+
+void undo(stack<Image> &image_stack)
+{
+    if (image_stack.size() == 1)
+    {
+        cout << "There is no filters applied." << endl;
+        return;
+    }
+    image_stack.pop();
+    cout << "< UNDO: Last filter reverted. History depth is now " << image_stack.size() - 1 << " . >" << endl;
+}
+
+void main_menu(unsigned long long size, string &filename)
+{
+    cout << "================================================================================" << endl;
+    cout << "                                BABY PHOTOSHOP (C++) " << endl;
+    cout << "================================================================================" << endl;
+    cout << " CURRENT IMAGE: [" << filename << "]  |  HISTORY DEPTH: " << size - 1 << endl;
+    cout << "--------------------------------------------------------------------------------" << endl;
+    cout << "                                MAIN MENU" << endl;
+    cout << "--------------------------------------------------------------------------------" << endl;
+    cout << "1- Load a new image\n"
+            "2- List Filters\n"
+            "3- Save Current Image\n"
+            "4- Exit"
+         << endl;
+    cout << ">> Enter your choice (1-4): _";
+}
+int main()
+{
+    string filename;
+    stack<Image> image_stack;
+    Image image = get_image(filename);
+    Image merged, rotated;
+    image_stack.push(image);
+    int option = 0, filter_option = 0, save_option;
+    enum Menu_Options
+    {
+        LOAD = 1,
+        LIST,
+        SAVE,
+        EXIT
+    };
+    enum Filter_Options
+    {
+        GRAY = 1,
+        BLACK_WHITE,
+        INVERT,
+        RESIZE,
+        MERGE,
+        ROTATE,
+        UNDO,
+        RETURN
+    };
+    while (option != 4)
+    {
+        main_menu(image_stack.size(), filename);
+        cin >> option;
+        switch (option)
+        {
+        case LOAD:
+            image = get_image(filename);
+            break;
+        case LIST:
+            filter_option = 0;
+            while (filter_option != 8)
+            {
+                list_filter();
+                cin >> filter_option;
+                switch (filter_option)
+                {
+                case GRAY:
+                    gray_scale(image);
+                    break;
+                case BLACK_WHITE:
+                    Black_White(image);
+                    break;
+                case INVERT:
+                    invert(image);
+                    break;
+                case RESIZE:
+                    resize_output(image);
+                    break;
+                case MERGE:
+                    image = merge_output(image, filename);
+                    break;
+                case ROTATE:
+                    image = rotate_output(image);
+                    break;
+                case UNDO:
+                    undo(image_stack);
+                    if (!image_stack.empty())
+                        image = image_stack.top();
+                    continue;
+
+                case RETURN:
+                    cout << ">>> Returning to main menu <<<" << endl;
+                }
+                if (filter_option >= 1 && filter_option <= 6)
+                {
+                    image_stack.push(image);
+                    cout << "Applied Successfully :)" << endl;
+                }
+            }
+            break;
+        case SAVE:
+            cout << "1- Save image on the same file\n"
+                    "2- Save image on a new file"
+                 << endl;
+            cin >> save_option;
+            if (save_option == 1)
+            {
+                save(image, filename);
+            }
+            else if (save_option == 2)
+            {
+                cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+                cin >> filename;
+                save(image, filename);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
     return 0;
 }

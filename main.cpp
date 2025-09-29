@@ -173,11 +173,6 @@ Image get_image(string &filename)
     return image;
 }
 
-void save(Image &image, string save_name)
-{
-    image.saveImage(save_name);
-}
-
 void list_filter()
 {
     cout << "--------------------------------------------------------------------------------" << endl;
@@ -262,14 +257,47 @@ void main_menu(unsigned long long size, string &filename)
          << endl;
     cout << ">> Enter your choice (1-4): _";
 }
+
+void save_image(string &filename, Image &image, int save_option)
+{
+    cout << "1- Save image on the same file\n"
+            "2- Save image on a new file"
+         << endl;
+    cin >> save_option;
+    if (save_option == 1)
+    {
+        image.saveImage(filename);
+    }
+    else if (save_option == 2)
+    {
+        bool saved = false;
+        string new_filename;
+        while (!saved)
+        {
+            cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+            cin >> new_filename;
+            try
+            {
+                image.saveImage(new_filename);
+                saved = true;
+            }
+            catch (invalid_argument &e)
+            {
+                cout << "Error: " << e.what() << endl;
+            }
+        }
+    }
+    cout << ">>> Saved Successfully <<<" << endl;
+}
 int main()
 {
     string filename;
     stack<Image> image_stack;
     Image image = get_image(filename);
-    Image merged, rotated;
+    Image merged;
+
     image_stack.push(image);
-    int option = 0, filter_option = 0, save_option;
+    int option = 0, filter_option = 0, save_option = 0;
     enum Menu_Options
     {
         LOAD = 1,
@@ -331,6 +359,8 @@ int main()
 
                 case RETURN:
                     cout << ">>> Returning to main menu <<<" << endl;
+                default:
+                    cout << "Invalid Option." << endl;
                 }
                 if (filter_option >= 1 && filter_option <= 6)
                 {
@@ -340,23 +370,13 @@ int main()
             }
             break;
         case SAVE:
-            cout << "1- Save image on the same file\n"
-                    "2- Save image on a new file"
-                 << endl;
-            cin >> save_option;
-            if (save_option == 1)
-            {
-                save(image, filename);
-            }
-            else if (save_option == 2)
-            {
-                cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
-                cin >> filename;
-                save(image, filename);
-            }
+            save_image(filename, image, save_option);
+            break;
+        case EXIT:
+            cout << "<<< Bye :) >>>" << endl;
             break;
         default:
-            break;
+            cout << "Invalid Option.";
         }
     }
 

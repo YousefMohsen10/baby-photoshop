@@ -158,18 +158,22 @@ Image rotate(Image &image, int angle)
 
 Image get_image(string &filename)
 {
-    cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
-    cin >> filename;
-    Image image(filename);
-    try
+    Image image;
+    while (true)
     {
-        image.loadNewImage(filename);
+        cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+        cin >> filename;
+        try
+        {
+            image.loadNewImage(filename);
+            break;
+        }
+        catch (invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+        }
+        cout << "* SUCCESS: Image '" << filename << "' loaded successfully." << endl;
     }
-    catch (invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-    }
-    cout << "* SUCCESS: Image '" << filename << "' loaded successfully." << endl;
     return image;
 }
 
@@ -260,12 +264,12 @@ void main_menu(unsigned long long size, string &filename)
 
 void save_image(string &filename, Image &image, int save_option)
 {
-    cout << "1- Save image on the same file\n"
-            "2- Save image on a new file"
-         << endl;
-    cout << ">> Enter your choice (1-2): _" << endl;
     while (true)
     {
+        cout << "1- Save image on the same file\n"
+                "2- Save image on a new file"
+             << endl;
+        cout << ">> Enter your choice (1-2): _";
         cin >> save_option;
         if (save_option == 1)
         {
@@ -278,7 +282,7 @@ void save_image(string &filename, Image &image, int save_option)
             string new_filename;
             while (!saved)
             {
-                cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+                cout << "Enter image path (.jpg, .bmp, .png, .tga): ";
                 cin >> new_filename;
                 try
                 {
@@ -304,7 +308,6 @@ int main()
     string filename;
     stack<Image> image_stack;
     Image image = get_image(filename);
-    Image merged;
 
     image_stack.push(image);
     int option = 0, filter_option = 0, save_option = 0;

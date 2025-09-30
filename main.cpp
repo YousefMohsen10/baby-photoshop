@@ -161,7 +161,7 @@ Image get_image(string &filename)
     Image image;
     while (true)
     {
-        cout << "Enter image path (.jpg, .bmp, .png, .tga): " << endl;
+        cout << "Enter image path (.jpg, .bmp, .png, .tga): ";
         cin >> filename;
         try
         {
@@ -220,7 +220,8 @@ void resize_output(Image &img)
 
 Image merge_output(Image &image1, string &filename)
 {
-    Image image2 = get_image(filename);
+    string filename2;
+    Image image2 = get_image(filename2);
     Image merged = merge_image(image1, image2);
     return merged;
 }
@@ -372,6 +373,7 @@ int main()
 
                 case RETURN:
                     cout << ">>> Returning to main menu <<<" << endl;
+                    break;
                 default:
                     cout << "Invalid Option." << endl;
                 }

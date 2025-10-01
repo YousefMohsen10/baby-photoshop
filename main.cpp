@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Image_Class.h"
-#include <stack>
+#include <vector>
 using namespace std;
 
 void gray_scale(Image &image)
@@ -190,9 +190,10 @@ void list_filter()
             "5- Merge Image\n"
             "6- Rotate\n"
             "7- Undo last filter\n"
-            "8- Return to Main Menu"
+            "8- Redo last filter\n"
+            "9- Return to Main Menu"
          << endl;
-    cout << ">> Enter filter number (1-8): _";
+    cout << ">> Enter filter number (1-9): _";
 }
 
 int get_width()
@@ -235,15 +236,29 @@ Image rotate_output(Image image)
     return rotated;
 }
 
-void undo(stack<Image> &image_stack)
+void undo(vector<Image> &history, int &current)
 {
-    if (image_stack.size() == 1)
+    if (current > 0)
     {
-        cout << "There is no filters applied." << endl;
-        return;
+        current--;
+        cout << "< UNDO: Last filter reverted. >" << endl;
     }
-    image_stack.pop();
-    cout << "< UNDO: Last filter reverted. History depth is now " << image_stack.size() - 1 << " . >" << endl;
+    else
+    {
+        cout << "Cannot undo: Already at the first image." << endl;
+    }
+}
+void redo(vector<Image> &history, int &current)
+{
+    if (current < history.size() - 1)
+    {
+        current++;
+        cout << "< REDO: Last filter Applied. >" << endl;
+    }
+    else
+    {
+        cout << "Cannot redo: Already at the latest image." << endl;
+    }
 }
 
 void main_menu(unsigned long long size, string &filename)
@@ -307,11 +322,11 @@ void save_image(string &filename, Image &image, int save_option)
 int main()
 {
     string filename;
-    stack<Image> image_stack;
+    vector<Image> history;
     Image image = get_image(filename);
 
-    image_stack.push(image);
-    int option = 0, filter_option = 0, save_option = 0;
+    history.push_back(image);
+    int option = 0, filter_option = 0, save_option = 0, current = 0;
     enum Menu_Options
     {
         LOAD = 1,
@@ -328,11 +343,12 @@ int main()
         MERGE,
         ROTATE,
         UNDO,
+        REDO,
         RETURN
     };
     while (option != 4)
     {
-        main_menu(image_stack.size(), filename);
+        main_menu(history.size(), filename);
         cin >> option;
         switch (option)
         {
@@ -341,7 +357,7 @@ int main()
             break;
         case LIST:
             filter_option = 0;
-            while (filter_option != 8)
+            while (filter_option != 9)
             {
                 list_filter();
                 cin >> filter_option;
@@ -366,11 +382,15 @@ int main()
                     image = rotate_output(image);
                     break;
                 case UNDO:
-                    undo(image_stack);
-                    if (!image_stack.empty())
-                        image = image_stack.top();
+                    undo(history, current);
+                    if (current != 0)
+                        image = history[current];
                     continue;
-
+                case REDO:
+                    redo(history, current);
+                    if (current != 0)
+                        image = history[current];
+                    continue;
                 case RETURN:
                     cout << ">>> Returning to main menu <<<" << endl;
                     break;
@@ -379,7 +399,8 @@ int main()
                 }
                 if (filter_option >= 1 && filter_option <= 6)
                 {
-                    image_stack.push(image);
+                    current++;
+                    history.push_back(image);
                     cout << "Applied Successfully :)" << endl;
                 }
             }

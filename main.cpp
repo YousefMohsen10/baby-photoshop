@@ -319,6 +319,25 @@ void save_image(string &filename, Image &image, int save_option)
     }
     cout << ">>> Saved Successfully <<<" << endl;
 }
+enum Menu_Options
+{
+    LOAD = 1,
+    LIST,
+    SAVE,
+    EXIT
+};
+enum Filter_Options
+{
+    GRAY = 1,
+    BLACK_WHITE,
+    INVERT,
+    RESIZE,
+    MERGE,
+    ROTATE,
+    UNDO,
+    REDO,
+    RETURN
+};
 int main()
 {
     string filename;
@@ -327,25 +346,6 @@ int main()
 
     history.push_back(image);
     int option = 0, filter_option = 0, save_option = 0, current = 0;
-    enum Menu_Options
-    {
-        LOAD = 1,
-        LIST,
-        SAVE,
-        EXIT
-    };
-    enum Filter_Options
-    {
-        GRAY = 1,
-        BLACK_WHITE,
-        INVERT,
-        RESIZE,
-        MERGE,
-        ROTATE,
-        UNDO,
-        REDO,
-        RETURN
-    };
     while (option != 4)
     {
         main_menu(history.size(), filename);
@@ -383,13 +383,11 @@ int main()
                     break;
                 case UNDO:
                     undo(history, current);
-                    if (current != 0)
-                        image = history[current];
+                    image = history[current];
                     continue;
                 case REDO:
                     redo(history, current);
-                    if (current != 0)
-                        image = history[current];
+                    image = history[current];
                     continue;
                 case RETURN:
                     cout << ">>> Returning to main menu <<<" << endl;
@@ -399,6 +397,10 @@ int main()
                 }
                 if (filter_option >= 1 && filter_option <= 6)
                 {
+                    if (current < history.size() - 1)
+                    {
+                        history.erase(history.begin() + current + 1, history.end());
+                    }
                     current++;
                     history.push_back(image);
                     cout << "Applied Successfully :)" << endl;

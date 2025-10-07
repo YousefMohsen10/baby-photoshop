@@ -263,6 +263,29 @@ void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f,
     }
 }
 
+void purple_scale(Image &image) {
+    float redBoost   = 1.2f;
+    float greenScale = 0.8f;
+    float blueBoost  = 1.2f;
+
+    for (int x = 0; x < image.width; x++) {
+        for (int y = 0; y < image.height; y++) {
+
+            unsigned int R = image(x, y, 0);
+            unsigned int G = image(x, y, 1);
+            unsigned int B = image(x, y, 2);
+
+            int newR = min(255, int(R * redBoost));
+            int newG = max(0,   int(G * greenScale));
+            int newB = min(255, int(B * blueBoost));
+
+            image(x, y, 0) = (unsigned int)newR;
+            image(x, y, 1) = (unsigned int)newG;
+            image(x, y, 2) = (unsigned int)newB;
+        }
+    }
+}
+
 Image get_image(string &filename)
 {
     Image image;

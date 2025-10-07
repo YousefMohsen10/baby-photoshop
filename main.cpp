@@ -487,7 +487,28 @@ Image crop_image(Image image, int row, int col, int width, int height) {
     return cropped_image;
 }
 
-
+void flip(Image& image, char flip_type) {
+    if (flip_type == 'V') {
+        for (int x = 0; x < image.width; x++) {
+            for (int y = 0; y < image.height / 2; y++) {
+                int oppositeY = image.height - 1 - y;
+                for (int channel = 0; channel < 3; channel++) {
+                    swap(image(x, y, channel), image(x, oppositeY, channel));
+                }
+            }
+        }
+    }
+    else if (flip_type == 'H') {
+        for (int y = 0; y < image.height; y++) {
+            for (int x = 0; x < image.width / 2; x++) {
+                int oppositeX = image.width - 1 - x;
+                for (int channel = 0; channel < 3; channel++) {
+                    swap(image(x, y, channel), image(oppositeX, y, channel));
+                }
+            }
+        }
+    }
+}
 
 int main()
 {

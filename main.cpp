@@ -234,6 +234,35 @@ void skewImage(Image &image, double angle)
     image = newImage;
 }
 
+void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f, float contrast = 1.1f) {
+    int width = image.width;
+    int height = image.height;
+
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            float r = image(i, j, 0);
+            float g = image(i, j, 1);
+            float b = image(i, j, 2);
+
+            r = r + (255 - r) * brightness;
+            g = g + (255 - g) * brightness;
+            b = b + (255 - b) * brightness;
+
+            r = r * (1.0f + warmth);
+            g = g * (1.0f + warmth * 0.5f);
+            b = b * (1.0f - warmth * 0.5f);
+
+            r = ((r - 128) * contrast) + 128;
+            g = ((g - 128) * contrast) + 128;
+            b = ((b - 128) * contrast) + 128;
+
+            image(i, j, 0) = min(255, max(0, (int)r));
+            image(i, j, 1) = min(255, max(0, (int)g));
+            image(i, j, 2) = min(255, max(0, (int)b));
+        }
+    }
+}
+
 Image get_image(string &filename)
 {
     Image image;

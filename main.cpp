@@ -487,6 +487,24 @@ Image crop_image(Image image, int row, int col, int width, int height) {
     return cropped_image;
 }
 
+void darken_and_lighten(Image &image, double lvl) {
+    lvl /= 100.0;
+    if (lvl <= 0.0) {
+        throw invalid_argument("Brightness level must be greater than 0");
+    }
+
+    for (int i = 0; i< image.width; i++) {
+        for (int j = 0; j<image.height; j++) {
+            for (int k = 0; k <image.channels; k++) {
+                int new_brightness = image(i, j, k) * lvl;
+                if (new_brightness < 0) new_brightness = 0;
+                if (new_brightness > 255) new_brightness = 255;
+                image(i, j, k) = new_brightness;
+            }
+        }
+    }
+}
+
 void flip(Image& image, char flip_type) {
     if (flip_type == 'V') {
         for (int x = 0; x < image.width; x++) {

@@ -553,6 +553,55 @@ void Infra_Red(Image& image)
     }
 }
 
+Image edge_detection(Image &image) {
+
+    int width = image.width;
+    int height = image.height;
+    Image edges(width, height);
+    int Gx[3][3] = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+
+    int Gy[3][3] = {
+        {-1, -2, -1},
+        { 0,  0,  0},
+        { 1,  2,  1}
+    };
+
+    for (int y = 1; y < height - 1; y++) {
+        for (int x = 1; x < width - 1; x++) {
+            int sumX = 0;
+            int sumY = 0;
+            for (int ky = -1; ky <= 1; ky++) {
+                for (int kx = -1; kx <= 1; kx++) {
+                    int r = image(x + kx, y + ky, 0);
+                    int g = image(x + kx, y + ky, 1);
+                    int b = image(x + kx, y + ky, 2);
+                    int gray = (r + g + b) / 3;
+
+                    // int pix = image(x + kx, y + ky, 0);
+                    sumX += gray * Gx[ky + 1][kx + 1];
+                    sumY += gray * Gy[ky + 1][kx + 1];
+                }
+            }
+            int magnitude = sumX * sumX + sumY * sumY;
+            int value;
+            if (magnitude >= 128*128)
+                value = 0;
+            else
+                value = 255;
+            for (int k =0; k<3; k++) {
+                edges(x, y, k) = value;
+            }
+        }
+    }
+
+    return edges;
+
+}
+
 Image oil_painting(Image& image, int radius, int intensityLevels)
 {
     cout << ">>> Applying Oil Painting Filter <<<" << endl;

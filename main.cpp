@@ -510,6 +510,31 @@ void flip(Image& image, char flip_type) {
     }
 }
 
+void Infra_Red(Image& image)
+{
+    int width = image.width;
+    int height = image.height;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            unsigned char r = image(x, y, 0);
+            unsigned char g = image(x, y, 1);
+            unsigned char b = image(x, y, 2);
+
+            g = 255 - g;
+            b = 255 - b;
+
+            r = 255;
+
+            image(x, y, 0) = r;
+            image(x, y, 1) = g;
+            image(x, y, 2) = b;
+        }
+    }
+}
+
 int main()
 {
     string filename;

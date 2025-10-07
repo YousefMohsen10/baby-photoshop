@@ -535,6 +535,75 @@ void Infra_Red(Image& image)
     }
 }
 
+Image oil_painting(Image& image, int radius, int intensityLevels)
+{
+    cout << ">>> Applying Oil Painting Filter <<<" << endl;
+
+    Image original = image;
+    int width = image.width;
+    int height = image.height;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+
+            vector<int> intensityCount(intensityLevels, 0);
+            vector<long> sumR(intensityLevels, 0);
+            vector<long> sumG(intensityLevels, 0);
+            vector<long> sumB(intensityLevels, 0);
+
+            for (int dy = -radius; dy <= radius; dy++)
+            {
+                for (int dx = -radius; dx <= radius; dx++)
+                {
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                    {
+                        unsigned char r, g, b;
+                        r = original(nx, ny, 0);
+                        g = original(nx, ny, 1);
+                        b = original(nx, ny, 2);
+
+                        int intensity = ((r + g + b) / 3.0) * intensityLevels / 256;
+
+                        if (intensity >= intensityLevels)
+                            intensity = intensityLevels - 1;
+
+                        intensityCount[intensity]++;
+                        sumR[intensity] += r;
+                        sumG[intensity] += g;
+                        sumB[intensity] += b;
+                    }
+                }
+            }
+
+            int maxIndex = 0;
+            for (int i = 1; i < intensityLevels; i++)
+            {
+                if (intensityCount[i] > intensityCount[maxIndex])
+                    maxIndex = i;
+            }
+
+            int count = max(intensityCount[maxIndex], 1);
+            char newR = sumR[maxIndex] / count;
+            char newG = sumG[maxIndex] / count;
+            char newB = sumB[maxIndex] / count;
+
+            image(x, y, 0) = newR;
+            image(x, y, 1) = newG;
+            image(x, y, 2) = newB;
+
+        }
+    }
+
+    cout << ">>> Oil Painting Filter Applied Successfully! <<<" << endl;
+
+    return image;
+}
+
 int main()
 {
     string filename;

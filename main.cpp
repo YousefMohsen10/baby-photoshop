@@ -449,6 +449,7 @@ void save_image(string &filename, Image &image, int save_option)
     }
     cout << ">>> Saved Successfully <<<" << endl;
 }
+
 enum Menu_Options
 {
     LOAD = 1,
@@ -456,6 +457,7 @@ enum Menu_Options
     SAVE,
     EXIT
 };
+
 enum Filter_Options
 {
     GRAY = 1,
@@ -468,6 +470,25 @@ enum Filter_Options
     REDO,
     RETURN
 };
+
+
+Image crop_image(Image image, int row, int col, int width, int height) {
+    if (row + width > image.width || col + height > image.height) {
+        throw out_of_range("Crop dimensions exceed image bounds");
+    }
+    Image cropped_image(width, height);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            cropped_image(i, j, 0) = image(row + i, col + j, 0);
+            cropped_image(i, j, 1) = image(row + i, col + j, 1);
+            cropped_image(i, j, 2) = image(row + i, col + j, 2);
+        }
+    }
+    return cropped_image;
+}
+
+
+
 int main()
 {
     string filename;

@@ -1,3 +1,4 @@
+#include <complex>
 #include <iostream>
 #include "Image_Class.h"
 #include <vector>
@@ -60,6 +61,7 @@ void Black_White(Image &image)
         }
     }
 }
+
 void invert(Image &image)
 {
     cout << ">>> Applying invert filter to your image... <<<" << endl;
@@ -155,8 +157,10 @@ Image rotate(Image &image, int angle)
     }
     return rotated;
 }
-Image blur_image(Image &image, int kernelSize)
+
+Image blur_image(Image &image, int kernelSize=0)
 {
+
     int off = kernelSize / 2;
     Image newimage(image.width, image.height);
     for (int j = 0; j < image.height; j++)
@@ -188,6 +192,7 @@ Image blur_image(Image &image, int kernelSize)
 
 void oldTVFilter(Image &image)
 {
+    cout << ">>> Applying Oil Painting Filter <<<" << endl;
     for (int j = 0; j < image.height; j++)
     {
         if (j % 2 == 0)
@@ -202,8 +207,10 @@ void oldTVFilter(Image &image)
     }
 }
 
-void skewImage(Image &image, double angle)
+void skewImage(Image &image, double angle = 0)
 {
+    cout << "Enter angle of skewing: ";
+    cin >> angle;
     double rad = angle * M_PI / 180.0;
     double skew = tan(rad);
     int newWidth = image.width + abs(image.height * skew);
@@ -235,6 +242,7 @@ void skewImage(Image &image, double angle)
 }
 
 void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f, float contrast = 1.1f) {
+    cout << "Applying Filter..." << endl;
     int width = image.width;
     int height = image.height;
 
@@ -264,6 +272,7 @@ void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f,
 }
 
 void purple_scale(Image &image) {
+    cout << ">>> Applying Oil Painting Filter <<<" << endl;
     float redBoost   = 1.2f;
     float greenScale = 0.8f;
     float blueBoost  = 1.2f;
@@ -284,6 +293,222 @@ void purple_scale(Image &image) {
             image(x, y, 2) = (unsigned int)newB;
         }
     }
+}
+
+void flip(Image& image, char flip_type) {
+    if (flip_type == 'V') {
+        for (int x = 0; x < image.width; x++) {
+            for (int y = 0; y < image.height / 2; y++) {
+                int oppositeY = image.height - 1 - y;
+                for (int channel = 0; channel < 3; channel++) {
+                    swap(image(x, y, channel), image(x, oppositeY, channel));
+                }
+            }
+        }
+    }
+    else if (flip_type == 'H') {
+        for (int y = 0; y < image.height; y++) {
+            for (int x = 0; x < image.width / 2; x++) {
+                int oppositeX = image.width - 1 - x;
+                for (int channel = 0; channel < 3; channel++) {
+                    swap(image(x, y, channel), image(oppositeX, y, channel));
+                }
+            }
+        }
+    }
+}
+
+void Infra_Red(Image& image)
+{
+    cout << ">>> Applying Oil Painting Filter <<<" << endl;
+    int width = image.width;
+    int height = image.height;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            unsigned char r = image(x, y, 0);
+            unsigned char g = image(x, y, 1);
+            unsigned char b = image(x, y, 2);
+
+            g = 255 - g;
+            b = 255 - b;
+
+            r = 255;
+
+            image(x, y, 0) = r;
+            image(x, y, 1) = g;
+            image(x, y, 2) = b;
+        }
+    }
+}
+
+void darken_and_lighten(Image &image, double lvl=0) {
+    cout << "Enter level of brightness: ";
+    cin >> lvl;
+    lvl /= 100.0;
+    if (lvl <= 0.0) {
+        throw invalid_argument("Brightness level must be greater than 0");
+    }
+
+    for (int i = 0; i< image.width; i++) {
+        for (int j = 0; j<image.height; j++) {
+            for (int k = 0; k <image.channels; k++) {
+                int new_brightness = image(i, j, k) * lvl;
+                if (new_brightness < 0) new_brightness = 0;
+                if (new_brightness > 255) new_brightness = 255;
+                image(i, j, k) = new_brightness;
+            }
+        }
+    }
+}
+
+Image edge_detection(Image &image) {
+    cout << "Applying Filter..." << endl;
+    int width = image.width;
+    int height = image.height;
+    Image edges(width, height);
+    int Gx[3][3] = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+
+    int Gy[3][3] = {
+        {-1, -2, -1},
+        { 0,  0,  0},
+        { 1,  2,  1}
+    };
+
+    for (int y = 1; y < height - 1; y++) {
+        for (int x = 1; x < width - 1; x++) {
+            int sumX = 0;
+            int sumY = 0;
+            for (int ky = -1; ky <= 1; ky++) {
+                for (int kx = -1; kx <= 1; kx++) {
+                    int r = image(x + kx, y + ky, 0);
+                    int g = image(x + kx, y + ky, 1);
+                    int b = image(x + kx, y + ky, 2);
+                    int gray = (r + g + b) / 3;
+
+                    // int pix = image(x + kx, y + ky, 0);
+                    sumX += gray * Gx[ky + 1][kx + 1];
+                    sumY += gray * Gy[ky + 1][kx + 1];
+                }
+            }
+            int magnitude = sumX * sumX + sumY * sumY;
+            int value;
+            if (magnitude >= 128*128)
+                value = 0;
+            else
+                value = 255;
+            for (int k =0; k<3; k++) {
+                edges(x, y, k) = value;
+            }
+        }
+    }
+
+    return edges;
+
+}
+
+Image oil_painting(Image& image, int radius = 3, int intensityLevels = 35)
+{
+    cout << ">>> Applying Oil Painting Filter <<<" << endl;
+
+    Image original = image;
+    int width = image.width;
+    int height = image.height;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+
+            vector<int> intensityCount(intensityLevels, 0);
+            vector<long> sumR(intensityLevels, 0);
+            vector<long> sumG(intensityLevels, 0);
+            vector<long> sumB(intensityLevels, 0);
+
+            for (int dy = -radius; dy <= radius; dy++)
+            {
+                for (int dx = -radius; dx <= radius; dx++)
+                {
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                    {
+                        unsigned char r, g, b;
+                        r = original(nx, ny, 0);
+                        g = original(nx, ny, 1);
+                        b = original(nx, ny, 2);
+
+                        int intensity = ((r + g + b) / 3.0) * intensityLevels / 256;
+
+                        if (intensity >= intensityLevels)
+                            intensity = intensityLevels - 1;
+
+                        intensityCount[intensity]++;
+                        sumR[intensity] += r;
+                        sumG[intensity] += g;
+                        sumB[intensity] += b;
+                    }
+                }
+            }
+
+            int maxIndex = 0;
+            for (int i = 1; i < intensityLevels; i++)
+            {
+                if (intensityCount[i] > intensityCount[maxIndex])
+                    maxIndex = i;
+            }
+
+            int count = max(intensityCount[maxIndex], 1);
+            char newR = sumR[maxIndex] / count;
+            char newG = sumG[maxIndex] / count;
+            char newB = sumB[maxIndex] / count;
+
+            image(x, y, 0) = newR;
+            image(x, y, 1) = newG;
+            image(x, y, 2) = newB;
+
+        }
+    }
+
+    cout << ">>> Oil Painting Filter Applied Successfully! <<<" << endl;
+
+    return image;
+}
+
+Image crop_image(Image image, int row, int col, int width, int height) {
+    if (row + width > image.width || col + height > image.height) {
+        throw out_of_range("Crop dimensions exceed image bounds");
+    }
+    Image cropped_image(width, height);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            cropped_image(i, j, 0) = image(row + i, col + j, 0);
+            cropped_image(i, j, 1) = image(row + i, col + j, 1);
+            cropped_image(i, j, 2) = image(row + i, col + j, 2);
+        }
+    }
+    return cropped_image;
+}
+
+Image crop_output(Image &image) {
+    int row, col, width, height;
+    cout << "Enter the starting row: ";
+    cin >> row;
+    cout << "Enter the starting column: ";
+    cin >> col;
+    cout << "Enter width of the area: ";
+    cin >> width;
+    cout << "Enter height of the area: ";
+    cin >> height;
+    Image cropped = crop_image(image, row, col, width, height);
+    return cropped;
 }
 
 Image get_image(string &filename)
@@ -316,14 +541,25 @@ void list_filter()
             "1- Gray Scale\n"
             "2- Black and White\n"
             "3- Invert Image\n"
-            "4- Resize Image\n"
-            "5- Merge Image\n"
+            "4- Merge Image\n"
+            "5- Flip Image\n"
             "6- Rotate\n"
-            "7- Undo last filter\n"
-            "8- Redo last filter\n"
-            "9- Return to Main Menu"
+            "7- Darken and Lighten\n"
+            "8- Crop Image\n"
+            "9- Edge Detection\n"
+            "10- Resize Image\n"
+            "11- Blur Filter\n"
+            "12- Sunlight Effect\n"
+            "13- Oil Painting\n"
+            "14- Old TV Effect\n"
+            "15- Purple Scale\n"
+            "16- Infrared Effect\n"
+            "17- Skew\n"
+            "18- Undo last filter\n"
+            "19- Redo last filter\n"
+            "20- Return to Main Menu"
          << endl;
-    cout << ">> Enter filter number (1-9): _";
+    cout << ">> Enter filter number (1-20): _";
 }
 
 int get_width()
@@ -333,6 +569,7 @@ int get_width()
     cin >> new_Width;
     return new_Width;
 }
+
 int get_height()
 {
     int new_Height;
@@ -463,213 +700,26 @@ enum Filter_Options
     GRAY = 1,
     BLACK_WHITE,
     INVERT,
-    RESIZE,
     MERGE,
+    FLIP,
     ROTATE,
+    DARKEN_LIGHTEN,
+    CROP,
+    EDGE_DETECT,
+    RESIZE,
+    BLUR,
+    SUNLIGHT,
+    OIL_PAINT,
+    OLD_TV,
+    PURPLE,
+    INFRARED,
+    SKEW,
     UNDO,
     REDO,
     RETURN
 };
 
 
-Image crop_image(Image image, int row, int col, int width, int height) {
-    if (row + width > image.width || col + height > image.height) {
-        throw out_of_range("Crop dimensions exceed image bounds");
-    }
-    Image cropped_image(width, height);
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            cropped_image(i, j, 0) = image(row + i, col + j, 0);
-            cropped_image(i, j, 1) = image(row + i, col + j, 1);
-            cropped_image(i, j, 2) = image(row + i, col + j, 2);
-        }
-    }
-    return cropped_image;
-}
-
-void darken_and_lighten(Image &image, double lvl) {
-    lvl /= 100.0;
-    if (lvl <= 0.0) {
-        throw invalid_argument("Brightness level must be greater than 0");
-    }
-
-    for (int i = 0; i< image.width; i++) {
-        for (int j = 0; j<image.height; j++) {
-            for (int k = 0; k <image.channels; k++) {
-                int new_brightness = image(i, j, k) * lvl;
-                if (new_brightness < 0) new_brightness = 0;
-                if (new_brightness > 255) new_brightness = 255;
-                image(i, j, k) = new_brightness;
-            }
-        }
-    }
-}
-
-void flip(Image& image, char flip_type) {
-    if (flip_type == 'V') {
-        for (int x = 0; x < image.width; x++) {
-            for (int y = 0; y < image.height / 2; y++) {
-                int oppositeY = image.height - 1 - y;
-                for (int channel = 0; channel < 3; channel++) {
-                    swap(image(x, y, channel), image(x, oppositeY, channel));
-                }
-            }
-        }
-    }
-    else if (flip_type == 'H') {
-        for (int y = 0; y < image.height; y++) {
-            for (int x = 0; x < image.width / 2; x++) {
-                int oppositeX = image.width - 1 - x;
-                for (int channel = 0; channel < 3; channel++) {
-                    swap(image(x, y, channel), image(oppositeX, y, channel));
-                }
-            }
-        }
-    }
-}
-
-void Infra_Red(Image& image)
-{
-    int width = image.width;
-    int height = image.height;
-
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            unsigned char r = image(x, y, 0);
-            unsigned char g = image(x, y, 1);
-            unsigned char b = image(x, y, 2);
-
-            g = 255 - g;
-            b = 255 - b;
-
-            r = 255;
-
-            image(x, y, 0) = r;
-            image(x, y, 1) = g;
-            image(x, y, 2) = b;
-        }
-    }
-}
-
-Image edge_detection(Image &image) {
-
-    int width = image.width;
-    int height = image.height;
-    Image edges(width, height);
-    int Gx[3][3] = {
-        {-1, 0, 1},
-        {-2, 0, 2},
-        {-1, 0, 1}
-    };
-
-    int Gy[3][3] = {
-        {-1, -2, -1},
-        { 0,  0,  0},
-        { 1,  2,  1}
-    };
-
-    for (int y = 1; y < height - 1; y++) {
-        for (int x = 1; x < width - 1; x++) {
-            int sumX = 0;
-            int sumY = 0;
-            for (int ky = -1; ky <= 1; ky++) {
-                for (int kx = -1; kx <= 1; kx++) {
-                    int r = image(x + kx, y + ky, 0);
-                    int g = image(x + kx, y + ky, 1);
-                    int b = image(x + kx, y + ky, 2);
-                    int gray = (r + g + b) / 3;
-
-                    // int pix = image(x + kx, y + ky, 0);
-                    sumX += gray * Gx[ky + 1][kx + 1];
-                    sumY += gray * Gy[ky + 1][kx + 1];
-                }
-            }
-            int magnitude = sumX * sumX + sumY * sumY;
-            int value;
-            if (magnitude >= 128*128)
-                value = 0;
-            else
-                value = 255;
-            for (int k =0; k<3; k++) {
-                edges(x, y, k) = value;
-            }
-        }
-    }
-
-    return edges;
-
-}
-
-Image oil_painting(Image& image, int radius, int intensityLevels)
-{
-    cout << ">>> Applying Oil Painting Filter <<<" << endl;
-
-    Image original = image;
-    int width = image.width;
-    int height = image.height;
-
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-
-            vector<int> intensityCount(intensityLevels, 0);
-            vector<long> sumR(intensityLevels, 0);
-            vector<long> sumG(intensityLevels, 0);
-            vector<long> sumB(intensityLevels, 0);
-
-            for (int dy = -radius; dy <= radius; dy++)
-            {
-                for (int dx = -radius; dx <= radius; dx++)
-                {
-                    int nx = x + dx;
-                    int ny = y + dy;
-
-                    if (nx >= 0 && nx < width && ny >= 0 && ny < height)
-                    {
-                        unsigned char r, g, b;
-                        r = original(nx, ny, 0);
-                        g = original(nx, ny, 1);
-                        b = original(nx, ny, 2);
-
-                        int intensity = ((r + g + b) / 3.0) * intensityLevels / 256;
-
-                        if (intensity >= intensityLevels)
-                            intensity = intensityLevels - 1;
-
-                        intensityCount[intensity]++;
-                        sumR[intensity] += r;
-                        sumG[intensity] += g;
-                        sumB[intensity] += b;
-                    }
-                }
-            }
-
-            int maxIndex = 0;
-            for (int i = 1; i < intensityLevels; i++)
-            {
-                if (intensityCount[i] > intensityCount[maxIndex])
-                    maxIndex = i;
-            }
-
-            int count = max(intensityCount[maxIndex], 1);
-            char newR = sumR[maxIndex] / count;
-            char newG = sumG[maxIndex] / count;
-            char newB = sumB[maxIndex] / count;
-
-            image(x, y, 0) = newR;
-            image(x, y, 1) = newG;
-            image(x, y, 2) = newB;
-
-        }
-    }
-
-    cout << ">>> Oil Painting Filter Applied Successfully! <<<" << endl;
-
-    return image;
-}
 
 int main()
 {
@@ -690,7 +740,7 @@ int main()
             break;
         case LIST:
             filter_option = 0;
-            while (filter_option != 9)
+            while (filter_option != 20)
             {
                 list_filter();
                 cin >> filter_option;
@@ -705,14 +755,47 @@ int main()
                 case INVERT:
                     invert(image);
                     break;
-                case RESIZE:
-                    resize_output(image);
-                    break;
                 case MERGE:
                     image = merge_output(image, filename);
                     break;
+                case FLIP:
+                    flip(image, 'H');
+                    break;
                 case ROTATE:
                     image = rotate_output(image);
+                    break;
+                case DARKEN_LIGHTEN:
+                    darken_and_lighten(image);
+                    break;
+                case CROP:
+                    image = crop_output(image);
+                    break;
+                case EDGE_DETECT:
+                        image = edge_detection(image);
+                     break;
+                case RESIZE:
+                    resize_output(image);
+                    break;
+                case BLUR:
+                    //
+                    break;
+                case SUNLIGHT:
+                    sunlight_glow(image);
+                    break;
+                case OIL_PAINT:
+                    oil_painting(image);
+                    break;
+                case OLD_TV:
+                    oldTVFilter(image);
+                    break;
+                case PURPLE:
+                    purple_scale(image);
+                    break;
+                case INFRARED:
+                    Infra_Red(image);
+                    break;
+                case SKEW:
+                    purple_scale(image);
                     break;
                 case UNDO:
                     undo(history, current);
@@ -728,7 +811,7 @@ int main()
                 default:
                     cout << "Invalid Option." << endl;
                 }
-                if (filter_option >= 1 && filter_option <= 6)
+                if (filter_option >= 1 && filter_option <= 17)
                 {
                     if (current < history.size() - 1)
                     {

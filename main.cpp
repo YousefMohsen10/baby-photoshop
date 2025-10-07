@@ -155,6 +155,36 @@ Image rotate(Image &image, int angle)
     }
     return rotated;
 }
+Image blur_image(Image &image, int kernelSize)
+{
+    int off = kernelSize / 2;
+    Image newimage(image.width, image.height);
+    for (int j = 0; j < image.height; j++)
+    {
+        for (int i = 0; i < image.width; i++)
+        {
+            int sum[3] = {0, 0, 0};
+            int count = 0;
+            for (int kj = 0; kj < kernelSize; kj++)
+            {
+                for (int ki = 0; ki < kernelSize; ki++)
+                {
+                    int ni = i + (ki - off);
+                    int nj = j + (kj - off);
+                    if (ni >= 0 && ni < image.width && nj >= 0 && nj < image.height)
+                    {
+                        for (int c = 0; c < 3; c++)
+                            sum[c] += image.getPixel(ni, nj, c);
+                        count++;
+                    }
+                }
+            }
+            for (int c = 0; c < 3; c++)
+                newimage.setPixel(i, j, c, sum[c] / count);
+        }
+    }
+    return newimage;
+}
 
 Image get_image(string &filename)
 {

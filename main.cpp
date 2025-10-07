@@ -202,6 +202,38 @@ void oldTVFilter(Image &image)
     }
 }
 
+void skewImage(Image &image, double angle)
+{
+    double rad = angle * M_PI / 180.0;
+    double skew = tan(rad);
+    int newWidth = image.width + abs(image.height * skew);
+    int newHeight = image.height;
+    Image newImage(newWidth, newHeight);
+    int xshift;
+    if (skew > 0)
+    {
+        xshift = abs(image.height * skew);
+    }
+    else
+    {
+        xshift = 0;
+    }
+    for (int j = 0; j < image.height; j++)
+    {
+        int shift = -j * skew;
+        for (int i = 0; i < image.width; i++)
+        {
+            int newI = i + shift + xshift;
+            if (newI >= 0 && newI < newWidth)
+            {
+                for (int c = 0; c < image.channels; c++)
+                    newImage(newI, j, c) = image(i, j, c);
+            }
+        }
+    }
+    image = newImage;
+}
+
 Image get_image(string &filename)
 {
     Image image;

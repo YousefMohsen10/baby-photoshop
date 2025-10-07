@@ -186,6 +186,22 @@ Image blur_image(Image &image, int kernelSize)
     return newimage;
 }
 
+void oldTVFilter(Image &image)
+{
+    for (int j = 0; j < image.height; j++)
+    {
+        if (j % 2 == 0)
+        {
+            for (int i = 0; i < image.width; i++)
+            {
+                image(i, j, 0) = image(i, j, 0) * 0.6;
+                image(i, j, 1) = image(i, j, 1) * 0.6;
+                image(i, j, 2) = image(i, j, 2) * 0.6;
+            }
+        }
+    }
+}
+
 Image get_image(string &filename)
 {
     Image image;

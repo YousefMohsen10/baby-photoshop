@@ -587,8 +587,8 @@ Image get_image(string &filename)
         {
             cout << "Error: " << e.what() << endl;
         }
-        cout << "* SUCCESS: Image '" << filename << "' loaded successfully." << endl;
     }
+    cout << "* SUCCESS: Image '" << filename << "' loaded successfully." << endl;
     return image;
 }
 
@@ -730,12 +730,26 @@ void redo(const vector<Image> &history, int &current)
     }
 }
 
+string split(string S1)
+{
+
+    string delim = "\\";
+    short pos = 0;
+    string sWord;
+    while ((pos = S1.find(delim)) != std::string::npos)
+    {
+        sWord = S1.substr(0, pos);
+        S1.erase(0, pos + delim.length());
+    }
+    return S1;
+}
+
 void main_menu(const unsigned long long size, const string &filename)
 {
     cout << "================================================================================" << endl;
     cout << "                                BABY PHOTOSHOP (C++) " << endl;
     cout << "================================================================================" << endl;
-    cout << " CURRENT IMAGE: [" << filename << "]  |  HISTORY DEPTH: " << size - 1 << endl;
+    cout << " CURRENT IMAGE: [" << split(filename) << "]  |  HISTORY DEPTH: " << size - 1 << endl;
     cout << "--------------------------------------------------------------------------------" << endl;
     cout << "                                MAIN MENU" << endl;
     cout << "--------------------------------------------------------------------------------" << endl;

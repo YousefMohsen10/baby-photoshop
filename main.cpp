@@ -1,12 +1,11 @@
-#include <complex>
 #include <iostream>
 #include "Image_Class.h"
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void gray_scale(Image &image)
 {
-    cout << ">>> Applying gray scale filter to your image... <<<" << endl;
     for (int i = 0; i < image.width; i++)
     {
         for (int j = 0; j < image.height; j++)
@@ -27,7 +26,6 @@ void gray_scale(Image &image)
 
 void Black_White(Image &image)
 {
-    cout << ">>> Applying Black and White filter to your image... <<<" << endl;
     int therhold = 128;
     for (int i = 0; i < image.width; i++)
     {
@@ -64,7 +62,6 @@ void Black_White(Image &image)
 
 void invert(Image &image)
 {
-    cout << ">>> Applying invert filter to your image... <<<" << endl;
     for (int i = 0; i < image.width; ++i)
     {
         for (int j = 0; j < image.height; ++j)
@@ -99,16 +96,26 @@ Image resize_image(Image &image, int new_Width, int new_Height)
     return new_Image;
 }
 
-Image merge_image(Image image1, Image image2)
+Image merge_image(Image image1, Image image2, const string &option)
 {
-    int mx_width = max(image1.width, image2.width);
-    int mx_height = max(image1.height, image2.height);
-    image1 = resize_image(image1, mx_width, mx_height);
-    image2 = resize_image(image2, mx_width, mx_height);
-    Image merged(mx_width, mx_height);
-    for (int i = 0; i < image1.width; i++)
+
+    int merge_width, merge_height;
+    if (option == "resize")
     {
-        for (int j = 0; j < image1.height; j++)
+        merge_width = max(image1.width, image2.width);
+        merge_height = max(image1.height, image2.height);
+        image1 = resize_image(image1, merge_width, merge_height);
+        image2 = resize_image(image2, merge_width, merge_height);
+    }
+    else if (option == "overlap")
+    {
+        merge_width = min(image1.width, image2.width);
+        merge_height = min(image1.height, image2.height);
+    }
+    Image merged(merge_width, merge_height);
+    for (int i = 0; i < merge_width; i++)
+    {
+        for (int j = 0; j < merge_height; j++)
         {
             for (int k = 0; k < 3; k++)
             {
@@ -158,41 +165,34 @@ Image rotate(Image &image, int angle)
     return rotated;
 }
 
-Image blur_image(Image &image, int kernelSize = 0)
+Image blur_image(Image &image, int radius, bool horizontal)
 {
-
-    int off = kernelSize / 2;
-    Image newimage(image.width, image.height);
+    Image temp(image.width, image.height);
     for (int j = 0; j < image.height; j++)
     {
         for (int i = 0; i < image.width; i++)
         {
-            int sum[3] = {0, 0, 0};
-            int count = 0;
-            for (int kj = 0; kj < kernelSize; kj++)
+            int sum[3] = {0, 0, 0}, count = 0;
+            for (int k = -radius; k <= radius; k++)
             {
-                for (int ki = 0; ki < kernelSize; ki++)
+                int ni = horizontal ? i + k : i;
+                int nj = horizontal ? j : j + k;
+                if (ni >= 0 && ni < image.width && nj >= 0 && nj < image.height)
                 {
-                    int ni = i + (ki - off);
-                    int nj = j + (kj - off);
-                    if (ni >= 0 && ni < image.width && nj >= 0 && nj < image.height)
-                    {
-                        for (int c = 0; c < 3; c++)
-                            sum[c] += image.getPixel(ni, nj, c);
-                        count++;
-                    }
+                    for (int c = 0; c < 3; c++)
+                        sum[c] += image.getPixel(ni, nj, c);
+                    count++;
                 }
             }
             for (int c = 0; c < 3; c++)
-                newimage.setPixel(i, j, c, sum[c] / count);
+                temp.setPixel(i, j, c, sum[c] / count);
         }
     }
-    return newimage;
+    return temp;
 }
 
 void oldTVFilter(Image &image)
 {
-    cout << ">>> Applying Oil Painting Filter <<<" << endl;
     for (int j = 0; j < image.height; j++)
     {
         if (j % 2 == 0)
@@ -243,7 +243,6 @@ void skewImage(Image &image, double angle = 0)
 
 void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f, float contrast = 1.1f)
 {
-    cout << "Applying Filter..." << endl;
     int width = image.width;
     int height = image.height;
 
@@ -276,7 +275,7 @@ void sunlight_glow(Image &image, float warmth = 0.25f, float brightness = 0.15f,
 
 void purple_scale(Image &image)
 {
-    cout << ">>> Applying Oil Painting Filter <<<" << endl;
+    cout << ">>> Applying Filter: Night Purple <<<" << endl;
     float redBoost = 1.2f;
     float greenScale = 0.8f;
     float blueBoost = 1.2f;
@@ -301,9 +300,26 @@ void purple_scale(Image &image)
     }
 }
 
-void flip(Image &image, char flip_type)
+void flip(Image &image)
 {
-    if (flip_type == 'V')
+    int flip_type;
+    while (true)
+    {
+        cout << "Enter flipping option: \n"
+                "1- Flip Vertical\n"
+                "2- Flip Horizontal\n";
+        cin >> flip_type;
+        if (flip_type == 1 || flip_type == 2)
+        {
+            break;
+        }
+        else
+        {
+            cout << "Invalid Option." << endl;
+        }
+    }
+
+    if (flip_type == 1)
     {
         for (int x = 0; x < image.width; x++)
         {
@@ -317,7 +333,7 @@ void flip(Image &image, char flip_type)
             }
         }
     }
-    else if (flip_type == 'H')
+    else if (flip_type == 2)
     {
         for (int y = 0; y < image.height; y++)
         {
@@ -335,7 +351,6 @@ void flip(Image &image, char flip_type)
 
 void Infra_Red(Image &image)
 {
-    cout << ">>> Applying Oil Painting Filter <<<" << endl;
     int width = image.width;
     int height = image.height;
 
@@ -361,12 +376,19 @@ void Infra_Red(Image &image)
 
 void darken_and_lighten(Image &image, double lvl = 0)
 {
-    cout << "Enter level of brightness: ";
-    cin >> lvl;
-    lvl /= 100.0;
-    if (lvl <= 0.0)
+    while (true)
     {
-        throw invalid_argument("Brightness level must be greater than 0");
+        cout << "Enter level of brightness: ";
+        cin >> lvl;
+        lvl /= 100.0;
+        if (lvl <= 0.0)
+        {
+            cout << "Invalid brightness level.\n";
+        }
+        else
+        {
+            break;
+        }
     }
 
     for (int i = 0; i < image.width; i++)
@@ -388,7 +410,6 @@ void darken_and_lighten(Image &image, double lvl = 0)
 
 Image edge_detection(Image &image)
 {
-    cout << "Applying Filter..." << endl;
     int width = image.width;
     int height = image.height;
     Image edges(width, height);
@@ -417,7 +438,6 @@ Image edge_detection(Image &image)
                     int b = image(x + kx, y + ky, 2);
                     int gray = (r + g + b) / 3;
 
-                    // int pix = image(x + kx, y + ky, 0);
                     sumX += gray * Gx[ky + 1][kx + 1];
                     sumY += gray * Gy[ky + 1][kx + 1];
                 }
@@ -440,8 +460,6 @@ Image edge_detection(Image &image)
 
 Image oil_painting(Image &image, int radius = 3, int intensityLevels = 35)
 {
-    cout << ">>> Applying Oil Painting Filter <<<" << endl;
-
     Image original = image;
     int width = image.width;
     int height = image.height;
@@ -506,12 +524,13 @@ Image oil_painting(Image &image, int radius = 3, int intensityLevels = 35)
     return image;
 }
 
-Image crop_image(Image image, int row, int col, int width, int height)
+Image crop_image(Image image, const int row, const int col, const int width, const int height)
 {
     if (row + width > image.width || col + height > image.height)
     {
         throw out_of_range("Crop dimensions exceed image bounds");
     }
+
     Image cropped_image(width, height);
     for (int i = 0; i < width; i++)
     {
@@ -525,18 +544,30 @@ Image crop_image(Image image, int row, int col, int width, int height)
     return cropped_image;
 }
 
-Image crop_output(Image &image)
+Image crop_output(const Image &image)
 {
     int row, col, width, height;
-    cout << "Enter the starting row: ";
-    cin >> row;
-    cout << "Enter the starting column: ";
-    cin >> col;
-    cout << "Enter width of the area: ";
-    cin >> width;
-    cout << "Enter height of the area: ";
-    cin >> height;
-    Image cropped = crop_image(image, row, col, width, height);
+    Image cropped;
+    while (true)
+    {
+        cout << ">> Enter the starting row: _";
+        cin >> row;
+        cout << ">> Enter the starting column: _";
+        cin >> col;
+        cout << ">> Enter width of the area: _";
+        cin >> width;
+        cout << ">> Enter height of the area: _";
+        cin >> height;
+        try
+        {
+            cropped = crop_image(image, row, col, width, height);
+            break;
+        }
+        catch (out_of_range &e)
+        {
+            cout << e.what() << endl;
+        }
+    }
     return cropped;
 }
 
@@ -545,7 +576,7 @@ Image get_image(string &filename)
     Image image;
     while (true)
     {
-        cout << "Enter image path (.jpg, .bmp, .png, .tga): ";
+        cout << ">> Enter image path (.jpg, .bmp, .png, .tga): ";
         cin >> filename;
         try
         {
@@ -594,7 +625,7 @@ void list_filter()
 int get_width()
 {
     int new_Width;
-    cout << "Enter NEW width: " << endl;
+    cout << ">> Enter NEW width: _" << endl;
     cin >> new_Width;
     return new_Width;
 }
@@ -602,14 +633,13 @@ int get_width()
 int get_height()
 {
     int new_Height;
-    cout << "Enter NEW height: " << endl;
+    cout << ">> Enter NEW height: _" << endl;
     cin >> new_Height;
     return new_Height;
 }
 
 void resize_output(Image &img)
 {
-    cout << ">>> ACTION: Resize Image <<<" << endl;
     int width = get_width();
     int height = get_height();
     img = resize_image(img, width, height);
@@ -619,17 +649,60 @@ Image merge_output(Image &image1, string &filename)
 {
     string filename2;
     Image image2 = get_image(filename2);
-    Image merged = merge_image(image1, image2);
+    int merge_option;
+    cout << "\n--------------------------------------------------" << endl;
+    cout << "  [MERGE IMAGE] - Select Alignment Strategy" << endl;
+    cout << "--------------------------------------------------" << endl;
+    while (true)
+    {
+        cout << "  [1] RESIZE: Enlarge both images to the largest dimensions." << endl;
+        cout << "  [2] OVERLAP: Use only the minimum shared area." << endl;
+        cout << ">> Enter option (1 or 2): _";
+        cin >> merge_option;
+        if (merge_option == 1 || merge_option == 2)
+        {
+            break;
+        }
+        else
+        {
+            cout << "Invalid Option" << endl;
+        }
+    }
+    string option = (merge_option == 1 ? "resize" : "overlap");
+    Image merged = merge_image(image1, image2, option);
     return merged;
 }
 
 Image rotate_output(Image image)
 {
     int angle;
-    cout << "Enter rotation angle (90 / 180 / 270): ";
+    cout << ">> Enter rotation angle (90 / 180 / 270): _";
     cin >> angle;
     Image rotated = rotate(image, angle);
     return rotated;
+}
+
+void blur_output(Image &image)
+{
+    int percent;
+    while (true)
+    {
+        cout << ">> Enter Blur Percentage(0->100): _";
+        cin >> percent;
+        if (percent >= 0 && percent <= 100)
+        {
+            break;
+        }
+        else
+        {
+            cout << "--- ERROR --- Invalid Blur Percentage." << endl;
+        }
+    }
+    percent = max(1, min(100, percent));
+    double ratio = percent / 100.0;
+    int radius = max(1, int(min(image.width, image.height) * ratio / 80.0));
+    Image temp = blur_image(image, radius, true);
+    image = blur_image(temp, radius, false);
 }
 
 void undo(vector<Image> &history, int &current)
@@ -644,12 +717,12 @@ void undo(vector<Image> &history, int &current)
         cout << "Cannot undo: Already at the first image." << endl;
     }
 }
-void redo(vector<Image> &history, int &current)
+void redo(const vector<Image> &history, int &current)
 {
     if (current < history.size() - 1)
     {
         current++;
-        cout << "< REDO: Last filter Applied. >" << endl;
+        cout << "< REDO: Last filter applied. >" << endl;
     }
     else
     {
@@ -657,7 +730,7 @@ void redo(vector<Image> &history, int &current)
     }
 }
 
-void main_menu(unsigned long long size, string &filename)
+void main_menu(const unsigned long long size, const string &filename)
 {
     cout << "================================================================================" << endl;
     cout << "                                BABY PHOTOSHOP (C++) " << endl;
@@ -674,7 +747,7 @@ void main_menu(unsigned long long size, string &filename)
     cout << ">> Enter your choice (1-4): _";
 }
 
-void save_image(string &filename, Image &image, int save_option)
+void save_image(const string &filename, Image &image, int save_option)
 {
     while (true)
     {
@@ -710,7 +783,7 @@ void save_image(string &filename, Image &image, int save_option)
         }
         else
         {
-            cout << "Invalid Option." << endl;
+            cout << "--- ERROR --- Invalid Option." << endl;
         }
     }
     cout << ">>> Saved Successfully <<<" << endl;
@@ -764,6 +837,9 @@ int main()
         {
         case LOAD:
             image = get_image(filename);
+            history.clear();
+            history.push_back(image);
+            current = 0;
             break;
         case LIST:
             filter_option = 0;
@@ -774,19 +850,22 @@ int main()
                 switch (filter_option)
                 {
                 case GRAY:
+                    cout << ">>> Applying Filter: Gray Scale <<<" << endl;
                     gray_scale(image);
                     break;
                 case BLACK_WHITE:
+                    cout << ">>> Applying Filter: Black & White <<<" << endl;
                     Black_White(image);
                     break;
                 case INVERT:
+                    cout << ">>> Applying Filter: Invert <<<" << endl;
                     invert(image);
                     break;
                 case MERGE:
                     image = merge_output(image, filename);
                     break;
                 case FLIP:
-                    flip(image, 'H');
+                    flip(image);
                     break;
                 case ROTATE:
                     image = rotate_output(image);
@@ -798,31 +877,38 @@ int main()
                     image = crop_output(image);
                     break;
                 case EDGE_DETECT:
+                    cout << ">>> Applying Filter: Edge Detection <<<" << endl;
                     image = edge_detection(image);
                     break;
                 case RESIZE:
+                    cout << ">>> ACTION: Resize Image <<<" << endl;
                     resize_output(image);
                     break;
                 case BLUR:
-                    //
+                    blur_output(image);
                     break;
                 case SUNLIGHT:
+                    cout << ">>> Applying Filter: Sunlight Glow <<<" << endl;
                     sunlight_glow(image);
                     break;
                 case OIL_PAINT:
+                    cout << ">>> Applying Filter: Oil Painting <<<" << endl;
                     oil_painting(image);
                     break;
                 case OLD_TV:
+                    cout << ">>> Applying Filter: Old TV <<<" << endl;
                     oldTVFilter(image);
                     break;
                 case PURPLE:
+                    cout << ">>> Applying Filter: Night Purple <<<" << endl;
                     purple_scale(image);
                     break;
                 case INFRARED:
+                    cout << ">>> Applying Filter: Infrared <<<" << endl;
                     Infra_Red(image);
                     break;
                 case SKEW:
-                    purple_scale(image);
+                    skewImage(image);
                     break;
                 case UNDO:
                     undo(history, current);
@@ -836,7 +922,7 @@ int main()
                     cout << ">>> Returning to main menu <<<" << endl;
                     break;
                 default:
-                    cout << "Invalid Option." << endl;
+                    cout << "--- ERROR --- Invalid Option." << endl;
                 }
                 if (filter_option >= 1 && filter_option <= 17)
                 {
@@ -846,7 +932,7 @@ int main()
                     }
                     current++;
                     history.push_back(image);
-                    cout << "Applied Successfully :)" << endl;
+                    cout << "< Applied Successfully :). >" << endl;
                 }
             }
             break;
@@ -857,7 +943,7 @@ int main()
             cout << "<<< Bye :) >>>" << endl;
             break;
         default:
-            cout << "Invalid Option.";
+            cout << "--- ERROR --- Invalid Option.";
         }
     }
 

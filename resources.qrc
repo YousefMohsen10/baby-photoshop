@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/blackandwhite.png</file>
+        <file>icons/blur.png</file>
+        <file>icons/brightness.png</file>
+        <file>icons/clearfilters.png</file>
+        <file>icons/crop.png</file>
+        <file>icons/deleteimage.png</file>
+        <file>icons/edgedetection.png</file>
+        <file>icons/flip.png</file>
+        <file>icons/frame.png</file>
+        <file>icons/grayscale.png</file>
+        <file>icons/infrared.png</file>
+        <file>icons/invert.png</file>
+        <file>icons/loadimage.png</file>
+        <file>icons/merge.png</file>
+        <file>icons/neon.png</file>
+        <file>icons/nightpurple-white.png</file>
+        <file>icons/oilpaining.png</file>
+        <file>icons/OldTV.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/resize.png</file>
+        <file>icons/saveimage.png</file>
+        <file>icons/shake.png</file>
+        <file>icons/skew.png</file>
+        <file>icons/sunlight glow.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/water wave.png</file>
+        <file>icons/rotateleft.png</file>
+        <file>icons/rotateright.png</file>
+        <file>icons/apply.png</file>
+        <file>icons/background.jpg</file>
+    </qresource>
+</RCC>

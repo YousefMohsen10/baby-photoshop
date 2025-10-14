@@ -1,0 +1,2704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1308</width>
+    <height>807</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>CrossCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>ImageEditor</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QPushButton" name="flipVButton">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>295</y>
+      <width>115</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2.2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2.2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2.2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2.2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>V</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="flipHButton">
+    <property name="geometry">
+     <rect>
+      <x>145</x>
+      <y>295</y>
+      <width>115</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2.2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2.2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2.2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2.2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>H</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>528</width>
+      <height>741</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="1">
+      <widget class="QPushButton" name="infraredButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Infrared</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/infrared.png</normaloff>:/icons/icons/infrared.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
+      <widget class="QPushButton" name="waveButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Water Wave</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/water wave.png</normaloff>:/icons/icons/water wave.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QPushButton" name="blurButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Blur</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/blur.png</normaloff>:/icons/icons/blur.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QPushButton" name="neonButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Neon</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/neon.png</normaloff>:/icons/icons/neon.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="blackwhitebutton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Black and White</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/blackandwhite.png</normaloff>:/icons/icons/blackandwhite.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QPushButton" name="skewButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Skew</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/skew.png</normaloff>:/icons/icons/skew.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="edgesButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Edge Detection</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/edgedetection.png</normaloff>:/icons/icons/edgedetection.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="17" column="0">
+      <widget class="QPushButton" name="redoButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 7px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.5px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.5px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.5px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QPushButton" name="cropButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Crop</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/crop.png</normaloff>:/icons/icons/crop.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="grayButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Gray Scale</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/grayscale.png</normaloff>:/icons/icons/grayscale.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QPushButton" name="flipButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Flip</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/flip.png</normaloff>:/icons/icons/flip.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="17" column="1">
+      <widget class="QPushButton" name="undoButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 7px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.5px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.5px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.5px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="invertbutton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Invert</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/invert.png</normaloff>:/icons/icons/invert.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="purpleButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Night Purple</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/nightpurple-white.png</normaloff>:/icons/icons/nightpurple-white.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QPushButton" name="sunlightButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Sunlight Glow</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/sunlight glow.png</normaloff>:/icons/icons/sunlight glow.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QPushButton" name="resizeButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Resize</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/resize.png</normaloff>:/icons/icons/resize.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="brightnessButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Brightness</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/brightness.png</normaloff>:/icons/icons/brightness.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="oilpaintButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Oil Painting</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/oilpaining.png</normaloff>:/icons/icons/oilpaining.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QPushButton" name="mergeButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Merge</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/merge.png</normaloff>:/icons/icons/merge.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="oldtvbutton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Old TV</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/OldTV.png</normaloff>:/icons/icons/OldTV.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QPushButton" name="frameButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Frame</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/frame.png</normaloff>:/icons/icons/frame.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="0">
+      <widget class="QPushButton" name="shakeButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Shake</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/shake.png</normaloff>:/icons/icons/shake.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+    <zorder>invertbutton</zorder>
+    <zorder>oldtvbutton</zorder>
+    <zorder>blackwhitebutton</zorder>
+    <zorder>edgesButton</zorder>
+    <zorder>undoButton</zorder>
+    <zorder>redoButton</zorder>
+    <zorder>purpleButton</zorder>
+    <zorder>infraredButton</zorder>
+    <zorder>sunlightButton</zorder>
+    <zorder>grayButton</zorder>
+    <zorder>oilpaintButton</zorder>
+    <zorder>flipButton</zorder>
+    <zorder>cropButton</zorder>
+    <zorder>brightnessButton</zorder>
+    <zorder>resizeButton</zorder>
+    <zorder>blurButton</zorder>
+    <zorder>skewButton</zorder>
+    <zorder>mergeButton</zorder>
+    <zorder>neonButton</zorder>
+    <zorder>waveButton</zorder>
+    <zorder>frameButton</zorder>
+    <zorder>shakeButton</zorder>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>30</y>
+      <width>701</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="ImageLayout">
+     <item row="3" column="1">
+      <widget class="QPushButton" name="saveButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Save image</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/saveimage.png</normaloff>:/icons/icons/saveimage.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" rowspan="2" colspan="2">
+      <widget class="ImageLabel" name="imageLabel">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Plain</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="loadButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Load Image</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/loadimage.png</normaloff>:/icons/icons/loadimage.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="deleteButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/deleteimage.png</normaloff>:/icons/icons/deleteimage.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QPushButton" name="clearButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Clear Filters</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/clearfilters.png</normaloff>:/icons/icons/clearfilters.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="leftButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>CrossCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.5px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.5px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.5px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/rotateleft.png</normaloff>:/icons/icons/rotateleft.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>17</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="rightButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>CrossCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.5px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.5px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.5px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/rotateright.png</normaloff>:/icons/icons/rotateright.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>17</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="brightnessWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>620</y>
+      <width>301</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <widget class="QSlider" name="brightnessSlider">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>160</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:horizontal {
+    border: 1px solid #333;
+    background: #1e1e1e;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::groove:horizontal:hover:enabled {
+    background: #2c2c2c;
+}
+
+QSlider::sub-page:horizontal:enabled {
+    background: #00ffff;
+    border: 1px solid #00ffff;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal:enabled {
+    background: #2e2e2e;
+    border: 1px solid #222;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal:enabled {
+    background: #00ffff;
+    border: 1px solid #00ffff;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border-radius: 7px;
+    transition: all 0.2s ease-in-out;
+}
+
+QSlider::handle:horizontal:hover:enabled {
+    background: #33ffff;
+    border: 1px solid #33ffff;
+}
+
+QSlider::handle:horizontal:pressed:enabled {
+    background: #008b8b;
+    border: 1px solid #008b8b;
+}
+
+/* Disabled appearance */
+QSlider:disabled {
+    background: #1e1e1e;
+}
+
+QSlider::groove:horizontal:disabled {
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+}
+
+QSlider::sub-page:horizontal:disabled {
+    background: #444;
+    border: 1px solid #444;
+}
+
+QSlider::add-page:horizontal:disabled {
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+}
+
+QSlider::handle:horizontal:disabled {
+    background: #555;
+    border: 1px solid #444;
+}
+</string>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="brightnessApply">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>40</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QLabel" name="brightnessValueLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>50</y>
+       <width>21</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Brightness</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="sizeLabel">
+    <property name="geometry">
+     <rect>
+      <x>903</x>
+      <y>3</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    qproperty-alignment: 'AlignCenter';
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Size</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="resizeWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>620</y>
+      <width>331</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="resizeApply">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>30</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>183</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="widthBox">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>New Height</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="heightBox">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>New Width</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QCheckBox" name="keepAspectCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>0</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QCheckBox {
+    font-size: 12px;
+    color: #cccccc;
+    spacing: 6px;
+    font-weight: 500;
+}
+
+QCheckBox::indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 2px solid #555;
+    background-color: #1e1e1e;
+}
+
+QCheckBox::indicator:hover {
+    border-color: #00ffff;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #00ffff;
+    border: 2px solid #00ffff;
+}
+
+QCheckBox::indicator:disabled {
+    background-color: #2e2e2e;
+    border: 2px solid #444;
+}
+
+QCheckBox::indicator:checked:disabled {
+    background-color: #555;
+    border: 2px solid #444;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Keep Aspect Ratio</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="blurWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>620</y>
+      <width>291</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>63</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.5px solid #2E2E2E;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Blur</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="blurSlider">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>160</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:horizontal {
+    border: 1px solid #333;
+    background: #1e1e1e;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::groove:horizontal:hover:enabled {
+    background: #2c2c2c;
+}
+
+QSlider::sub-page:horizontal:enabled {
+    background: #00ffff;
+    border: 1px solid #00ffff;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal:enabled {
+    background: #2e2e2e;
+    border: 1px solid #222;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal:enabled {
+    background: #00ffff;
+    border: 1px solid #00ffff;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border-radius: 7px;
+}
+
+QSlider::handle:horizontal:hover:enabled {
+    background: #33ffff;
+    border: 1px solid #33ffff;
+}
+
+QSlider::handle:horizontal:pressed:enabled {
+    background: #008b8b;
+    border: 1px solid #008b8b;
+}
+
+/* Disabled appearance */
+QSlider:disabled {
+    background: #1e1e1e;
+}
+
+QSlider::groove:horizontal:disabled {
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+}
+
+QSlider::sub-page:horizontal:disabled {
+    background: #444;
+    border: 1px solid #444;
+}
+
+QSlider::add-page:horizontal:disabled {
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+}
+
+QSlider::handle:horizontal:disabled {
+    background: #555;
+    border: 1px solid #444;
+}
+</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="blurValueLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>30</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="blurApply">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>30</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skewWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>620</y>
+      <width>281</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="skewApply">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>20</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>154</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout_3">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Skew Degree</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="skewBox">
+        <property name="minimum">
+         <number>-90</number>
+        </property>
+        <property name="maximum">
+         <number>90</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="mergeWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>620</y>
+      <width>211</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="mergeApply">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>89</width>
+       <height>59</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="resizeRadioButton">
+        <property name="text">
+         <string>Resize</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="overlapRadioButton">
+        <property name="text">
+         <string>Overlap</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="frameWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>610</y>
+      <width>201</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="frameApply">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>60</y>
+       <width>100</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 1.8px solid #2E2E2E;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    max-width: 80px;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.8px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.8px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.8px solid #2E2E2E;
+    color: #555;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/icons/apply.png</normaloff>:/icons/icons/apply.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>79</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="simpleRadioButton">
+        <property name="styleSheet">
+         <string notr="true">QRadioButton {
+    font-size: 12px;
+    color: #cccccc;
+    spacing: 6px;
+    font-weight: 500;
+}
+
+QRadioButton::indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px; 
+    border: 2px solid #555;
+    background-color: #1e1e1e;
+}
+
+QRadioButton::indicator:hover {
+    border-color: #00ffff;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #00ffff;
+    border: 2px solid #00ffff;
+}
+
+QRadioButton::indicator:disabled {
+    background-color: #2e2e2e;
+    border: 2px solid #444;
+}
+
+QRadioButton::indicator:checked:disabled {
+    background-color: #555;
+    border: 2px solid #444;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Simple</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="doubleRadioButton">
+        <property name="styleSheet">
+         <string notr="true">QRadioButton {
+    font-size: 12px;
+    color: #cccccc;
+    spacing: 6px;
+    font-weight: 500;
+}
+
+QRadioButton::indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    border: 2px solid #555;
+    background-color: #1e1e1e;
+}
+
+QRadioButton::indicator:hover {
+    border-color: #00ffff;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #00ffff;
+    border: 2px solid #00ffff;
+}
+
+QRadioButton::indicator:disabled {
+    background-color: #2e2e2e;
+    border: 2px solid #444;
+}
+
+QRadioButton::indicator:checked:disabled {
+    background-color: #555;
+    border: 2px solid #444;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Double</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="fancyRadioButton">
+        <property name="styleSheet">
+         <string notr="true">QRadioButton {
+    font-size: 12px;
+    color: #cccccc;
+    spacing: 6px;
+    font-weight: 500;
+}
+
+QRadioButton::indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    border: 2px solid #555;
+    background-color: #1e1e1e;
+}
+
+QRadioButton::indicator:hover {
+    border-color: #00ffff;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #00ffff;
+    border: 2px solid #00ffff;
+}
+
+QRadioButton::indicator:disabled {
+    background-color: #2e2e2e;
+    border: 2px solid #444;
+}
+
+QRadioButton::indicator:checked:disabled {
+    background-color: #555;
+    border: 2px solid #444;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Fancy</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1308</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageLabel</class>
+   <extends>QLabel</extends>
+   <header>C:\Users\Alaa\Desktop\baby-photoshop-gui-test\ImageLabel.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -14,6 +14,7 @@
 #include <QInputDialog>
 #include <QShortcut>
 #include <QKeySequence>
+#include "ImageLabel.h"
 using namespace std;
 
 

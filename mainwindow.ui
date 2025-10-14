@@ -2694,7 +2694,7 @@ QRadioButton::indicator:checked:disabled {
   <customwidget>
    <class>ImageLabel</class>
    <extends>QLabel</extends>
-   <header>C:\Users\Alaa\Desktop\baby-photoshop-gui-test\ImageLabel.h</header>
+   <header>ImageLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

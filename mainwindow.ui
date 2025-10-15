@@ -2693,7 +2693,6 @@ QRadioButton::indicator:checked:disabled {
     background-position: center;
     background-origin: content;
     background-clip: border;
-    background-size: contain;
     aspect ratio
     }</string>
     </property>

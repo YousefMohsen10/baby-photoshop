@@ -23,19 +23,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    // --- Save ---
+    // Save
     saveShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
     connect(saveShortcut, &QShortcut::activated, this, &MainWindow::onSaveButtonClicked);
 
-    // --- Delete ---
+    // Delete
     deleteShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
     connect(deleteShortcut, &QShortcut::activated, this, &MainWindow::onDeleteButtonClicked);
 
-    // --- Redo ---
+    // Redo
     redoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y), this);
     connect(redoShortcut, &QShortcut::activated, this, &MainWindow::onRedoButtonClicked);
 
-    // --- Undo ---
+    // Undo
     undoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z), this);
     connect(undoShortcut, &QShortcut::activated, this, &MainWindow::onUndoButtonClicked);
 
@@ -51,9 +51,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->imageLabel->setMouseTracking(true);
     ui->imageLabel->setAttribute(Qt::WA_Hover);
     ui->imageLabel->installEventFilter(this);
-    // ui->flipButton->setMouseTracking(true);
-    // ui->flipButton->setAttribute(Qt::WA_Hover);
-    // ui->flipButton->installEventFilter(this);
     ui->flipHButton->setVisible(false);
     ui->flipVButton->setVisible(false);
     ui->brightnessWidget->hide();
@@ -167,56 +164,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->frameButton,&QPushButton::clicked, this, [=](){
         hideAllFilterMenus(false);
         ui->frameWidget->show();
-        // ui->frameApply->setEnabled(false);
     });
-
-
-
-
-
-
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::updateImageLabel(const QImage &qimg)
-{
-    int labelWidth = 699;
-    int labelHeight = 446;
-
-    QPixmap pixmap = QPixmap::fromImage(qimg);
-    QPixmap scaledPixmap = pixmap.scaled(labelWidth, labelHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    ui->imageLabel->setPixmap(scaledPixmap);
-    ui->imageLabel->setFixedSize(labelWidth, labelHeight);
-    ui->imageLabel->setAlignment(Qt::AlignCenter);
-}
-
-void MainWindow::onLoadImageClicked() {
-    QString filePath = QFileDialog::getOpenFileName(this, "Open Image", "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages", "Images (*.png *.jpg *.bmp *.tga)");
-    if (filePath.isEmpty()) return;
-    enableAll();
-    resetAll();
-    string path = filePath.toStdString();
-    myImage.loadNewImage(path);
-    originalImage = myImage;
-    history.clear();
-    history.push_back(myImage);
-    current = 0;
-    hideAllFilterMenus(false);
-    QImage qimg = convertImageToQImage(myImage);
-    updateImageLabel(qimg);
-    updateSizeLabel(myImage.width, myImage.height);
-    originalAspectRatio = static_cast<float>(myImage.width) / myImage.height;
-
-
-}
-
-
 
 QImage MainWindow::convertImageToQImage(const Image &img) {
     QImage qimg(img.width, img.height, QImage::Format_RGB888);
@@ -248,6 +202,24 @@ Image MainWindow::convertQImageToImage(const QImage &qimg)
     return img;
 }
 
+void MainWindow::onLoadImageClicked() {
+    QString filePath = QFileDialog::getOpenFileName(this, "Open Image", "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages", "Images (*.png *.jpg *.bmp *.tga)");
+    if (filePath.isEmpty()) return;
+    enableAll();
+    resetAll();
+    string path = filePath.toStdString();
+    myImage.loadNewImage(path);
+    originalImage = myImage;
+    history.clear();
+    history.push_back(myImage);
+    current = 0;
+    hideAllFilterMenus(false);
+    QImage qimg = convertImageToQImage(myImage);
+    updateImageLabel(qimg);
+    updateSizeLabel(myImage.width, myImage.height);
+    originalAspectRatio = static_cast<float>(myImage.width) / myImage.height;
+}
+
 void MainWindow::onClearButtonClicked()
 {
     myImage = originalImage;
@@ -260,7 +232,6 @@ void MainWindow::onClearButtonClicked()
     QImage qimg = convertImageToQImage(myImage);
     updateImageLabel(qimg);
 }
-
 
 void MainWindow::onDeleteButtonClicked()
 {
@@ -277,7 +248,30 @@ void MainWindow::onDeleteButtonClicked()
     ui->imageLabel->setAlignment(Qt::AlignCenter);
     ui->imageLabel->setStyleSheet("background-color: #2e2e2e; border-radius: 10px;");
     disableAll();
+}
 
+void MainWindow::onSaveButtonClicked()
+{
+    QString qpath = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                 "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages\\",
+                                                 tr("Images (*.png *.jpg *.bmp *.tga)"));
+    hideAllFilterMenus(false);
+    if(qpath.isEmpty()) return;
+    string path = qpath.toStdString();
+    myImage.saveImage(path);
+}
+
+void MainWindow::updateImageLabel(const QImage &qimg)
+{
+    int labelWidth = 699;
+    int labelHeight = 446;
+
+    QPixmap pixmap = QPixmap::fromImage(qimg);
+    QPixmap scaledPixmap = pixmap.scaled(labelWidth, labelHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    ui->imageLabel->setPixmap(scaledPixmap);
+    ui->imageLabel->setFixedSize(labelWidth, labelHeight);
+    ui->imageLabel->setAlignment(Qt::AlignCenter);
 }
 
 void MainWindow::onUndoButtonClicked(){
@@ -312,17 +306,6 @@ void MainWindow::onRedoButtonClicked(){
     }
 }
 
-void MainWindow::onSaveButtonClicked()
-{
-    QString qpath = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                 "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages\\",
-                                                 tr("Images (*.png *.jpg *.bmp *.tga)"));
-    hideAllFilterMenus(false);
-    if(qpath.isEmpty()) return;
-    string path = qpath.toStdString();
-    myImage.saveImage(path);
-}
-
 void MainWindow::onApplyGrayScaleClicked() {
     if (current < (int)history.size() - 1)
         history.erase(history.begin() + current + 1, history.end());
@@ -348,7 +331,6 @@ void MainWindow::onApplyBlackWhiteClicked()
     updateImageLabel(qimg);
 }
 
-
 void MainWindow::onApplyInvertClicked()
 {
     if (current < (int)history.size() - 1)
@@ -360,7 +342,6 @@ void MainWindow::onApplyInvertClicked()
     QImage qimg = convertImageToQImage(myImage);
     updateImageLabel(qimg);
 }
-
 
 void MainWindow::onApplyOldTVClicked()
 {
@@ -374,7 +355,6 @@ void MainWindow::onApplyOldTVClicked()
     updateImageLabel(qimg);
 }
 
-
 void MainWindow::onApplyOilPaintClicked()
 {
     if (current < (int)history.size() - 1)
@@ -387,7 +367,6 @@ void MainWindow::onApplyOilPaintClicked()
     updateImageLabel(qimg);
 }
 
-
 void MainWindow::onApplyEdgeDetectionClicked()
 {
     if (current < (int)history.size() - 1)
@@ -399,26 +378,6 @@ void MainWindow::onApplyEdgeDetectionClicked()
     QImage qimg = convertImageToQImage(myImage);
     updateImageLabel(qimg);
 }
-
-
-
-
-bool MainWindow::eventFilter(QObject *obj, QEvent *event){
-    if(obj == ui->imageLabel){
-        if(event->type() == QEvent::MouseButtonPress && !ui->imageLabel->getCroppingStatus()){
-            QImage qimg = convertImageToQImage(originalImage);
-            updateImageLabel(qimg);
-        }
-        else if (event->type() == QEvent::MouseButtonRelease && !ui->imageLabel->getCroppingStatus())
-        {
-            QImage qimg = convertImageToQImage(myImage);
-            updateImageLabel(qimg);
-        }
-    }
-    return QObject::eventFilter(obj, event);
-}
-
-
 
 void MainWindow::onApplyInfraredClicked(){
     if (current < (int)history.size() - 1)
@@ -528,9 +487,6 @@ void MainWindow::onCropRequested(const QRect &rect){
     QSize pixSize = pixmap.size();
     QSize lblSize = ui->imageLabel->size();
 
-    double scaleX = double(pixSize.width()) / lblSize.width();
-    double scaleY = double(pixSize.height()) / lblSize.height();
-
     double xOffset = 0, yOffset = 0;
     double scaledW = lblSize.width();
     double scaledH = lblSize.height();
@@ -616,23 +572,10 @@ void MainWindow::onHeightChanged(int newHeight)
     isUpdatingDimensions = false;
 }
 
-
 void MainWindow::updateSizeLabel(int width, int height){
     ui->sizeLabel->show();
     QString size = QString("%1×%2").arg(width).arg(height);
     ui->sizeLabel->setText(size);
-}
-
-void MainWindow::hideAllFilterMenus(bool visible){
-    ui->resizeWidget->hide();
-    ui->brightnessWidget->hide();
-    ui->blurWidget->hide();
-    ui->skewWidget->hide();
-    ui->mergeWidget->hide();
-    ui->frameWidget->hide();
-    ui->imageLabel->setCropping(false);
-    toggleFlipOptions(visible);
-
 }
 
 void MainWindow::applyBlurSliderValue(int value){
@@ -759,6 +702,21 @@ void MainWindow::onApplyShakeClicked(){
     updateImageLabel(qimg);
 }
 
+bool MainWindow::eventFilter(QObject *obj, QEvent *event){
+    if(obj == ui->imageLabel){
+        if(event->type() == QEvent::MouseButtonPress && !ui->imageLabel->getCroppingStatus()){
+            QImage qimg = convertImageToQImage(originalImage);
+            updateImageLabel(qimg);
+        }
+        else if (event->type() == QEvent::MouseButtonRelease && !ui->imageLabel->getCroppingStatus())
+        {
+            QImage qimg = convertImageToQImage(myImage);
+            updateImageLabel(qimg);
+        }
+    }
+    return QObject::eventFilter(obj, event);
+}
+
 void MainWindow::disableAll(){
     ui->clearButton->setEnabled(false);
     ui->deleteButton->setEnabled(false);
@@ -841,4 +799,15 @@ void MainWindow::resetAll(){
     ui->fancyRadioButton->clicked(false);
     ui->heightBox->setValue(0);
     ui->widthBox->setValue(0);
+}
+
+void MainWindow::hideAllFilterMenus(bool visible){
+    ui->resizeWidget->hide();
+    ui->brightnessWidget->hide();
+    ui->blurWidget->hide();
+    ui->skewWidget->hide();
+    ui->mergeWidget->hide();
+    ui->frameWidget->hide();
+    ui->imageLabel->setCropping(false);
+    toggleFlipOptions(visible);
 }

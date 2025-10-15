@@ -2677,6 +2677,27 @@ QRadioButton::indicator:checked:disabled {
      </layout>
     </widget>
    </widget>
+   <widget class="QWidget" name="logoWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>600</y>
+      <width>181</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+    background-image: url(:/icons/icons/pixify.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;
+    background-clip: border;
+    background-size: contain;
+    aspect ratio
+    }</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

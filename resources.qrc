@@ -29,5 +29,6 @@
         <file>icons/rotateleft.png</file>
         <file>icons/rotateright.png</file>
         <file>icons/apply.png</file>
+        <file>icons/pixify.png</file>
     </qresource>
 </RCC>

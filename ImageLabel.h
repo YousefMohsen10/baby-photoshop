@@ -15,7 +15,7 @@ public:
 
     void setCropping(bool value) {
         cropping = value;
-        readyToDraw = false; // wait for the first click
+        readyToDraw = false;
         setCursor(value ? Qt::CrossCursor : Qt::ArrowCursor);
     }
     bool getCroppingStatus(){return cropping;}
@@ -85,4 +85,4 @@ signals:
     void cropRequested(const QRect &rect);
 };
 
-#endif // IMAGELABEL_H
+#endif

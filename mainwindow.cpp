@@ -154,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->mergeButton, &QPushButton::clicked, this, [=](){
         hideAllFilterMenus(false);
-        QString filePath = QFileDialog::getOpenFileName(this, "Open Image", "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages", "Images (*.png *.jpg *.bmp *.tga)");
+        QString filePath = QFileDialog::getOpenFileName(this, "Open Image", QDir::homePath(), "Images (*.png *.jpg *.bmp *.tga)");
         if (filePath.isEmpty()) return;
         string path = filePath.toStdString();
         mergeImage.loadNewImage(path);
@@ -203,7 +203,7 @@ Image MainWindow::convertQImageToImage(const QImage &qimg)
 }
 
 void MainWindow::onLoadImageClicked() {
-    QString filePath = QFileDialog::getOpenFileName(this, "Open Image", "C:\\Users\\Alaa\\Desktop\\Babyphotoshop data\\CS213-2025-2026-Assignemnt1-SampleImages\\CS213-2025-2026-Assignemnt1-SampleImages\\CS112-Winter2023-2024-Assignemnt3-SampleImages", "Images (*.png *.jpg *.bmp *.tga)");
+    QString filePath = QFileDialog::getOpenFileName(this, "Open Image", QDir::homePath(), "Images (*.png *.jpg *.bmp *.tga)");
     if (filePath.isEmpty()) return;
     enableAll();
     resetAll();

@@ -63,6 +63,10 @@ Note: This runs the console version of the app, useful for testing algorithms wi
 Tip: All sliders, buttons, and menus update the image in real-time. Remember to click “Apply” to save changes.
 
 ## Screenshots
+<img width="1622" height="1012" alt="image" src="https://github.com/user-attachments/assets/1f1a9591-0c8a-4d67-8546-dcf6ca715c44" />
+<img width="1626" height="1010" alt="image" src="https://github.com/user-attachments/assets/7fed28a4-528d-46df-b640-d03ae81435ac" />
+<img width="1626" height="1011" alt="image" src="https://github.com/user-attachments/assets/80ad99e3-bd68-46ad-9a8d-c48c52d7c507" />
+
 
 ## Credits
 * Developed by: Alaa Mohamed Okasha, Sayed Ashraf Sayed, Yousef Mohsen Mahmoud

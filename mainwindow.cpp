@@ -564,7 +564,7 @@ void MainWindow::onCropRequested(const QRect &rect){
     history.push_back(myImage);
     current++;
     updateSizeLabel(myImage.width, myImage.height);
-    ui->imageLabel->setPixmap(cropped);
+    updateImageLabel(cropped_qimage);
 }
 
 void MainWindow::applyBrightnessSliderValue(int value){

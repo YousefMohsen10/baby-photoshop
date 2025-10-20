@@ -69,7 +69,7 @@ Tip: All sliders, buttons, and menus update the image in real-time. Remember to 
 
 
 ## Credits
-* Developed by: Alaa Mohamed Okasha, Sayed Ashraf Sayed, Yousef Mohsen Mahmoud
+* Developed by: Alaa Mohamed Okasha, Sayed Ashraf Sayed Hassan, Yousef Mohsen Mahmoud
 
 * Faculty: Faculty of Computing and Artificial Intelligence, Cairo University
 

@@ -1397,112 +1397,60 @@ QPushButton:disabled {
        </property>
       </widget>
      </item>
-     <item row="0" column="0" rowspan="2" colspan="2">
-      <widget class="ImageLabel" name="imageLabel">
+     <item row="2" column="1">
+      <widget class="QPushButton" name="rightButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>CrossCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Shape::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Shadow::Plain</enum>
+        <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 1.5px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 1.5px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 1.5px solid #2E2E2E;
+    color: #555;
+}
+</string>
        </property>
        <property name="text">
         <string/>
        </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="loadButton">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    background-color: #1E1E1E;
-    color: white;
-    border: 2px solid #2E2E2E;
-    border-radius: 8px;
-    padding: 5px 14px;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 0.8px;
-}
-
-QPushButton:hover {
-    background-color: #2C2C2C;
-    border: 2px solid #00FFFF;
-    color: #00FFFF;
-}
-
-QPushButton:pressed {
-    background-color: #111;
-    border: 2px solid #008B8B;
-    color: #008B8B;
-}
-
-QPushButton:disabled {
-    background-color: #1E1E1E;
-    border: 2px solid #2E2E2E;
-    color: #555;
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Load Image</string>
-       </property>
        <property name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/icons/icons/loadimage.png</normaloff>:/icons/icons/loadimage.png</iconset>
+         <normaloff>:/icons/icons/rotateright.png</normaloff>:/icons/icons/rotateright.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>20</width>
-         <height>20</height>
+         <width>24</width>
+         <height>17</height>
         </size>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="deleteButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    background-color: #1E1E1E;
-    color: white;
-    border: 2px solid #2E2E2E;
-    border-radius: 8px;
-    padding: 5px 14px;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 0.8px;
-}
-
-QPushButton:hover {
-    background-color: #2C2C2C;
-    border: 2px solid #00FFFF;
-    color: #00FFFF;
-}
-
-QPushButton:pressed {
-    background-color: #111;
-    border: 2px solid #008B8B;
-    color: #008B8B;
-}
-
-QPushButton:disabled {
-    background-color: #1E1E1E;
-    border: 2px solid #2E2E2E;
-    color: #555;
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Delete</string>
-       </property>
-       <property name="icon">
-        <iconset resource="resources.qrc">
-         <normaloff>:/icons/icons/deleteimage.png</normaloff>:/icons/icons/deleteimage.png</iconset>
        </property>
       </widget>
      </item>
@@ -1608,60 +1556,112 @@ QPushButton:disabled {
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="rightButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="cursor">
-        <cursorShape>CrossCursor</cursorShape>
-       </property>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="loadButton">
        <property name="styleSheet">
         <string notr="true">QPushButton {
-    background-color: transparent;
+    background-color: #1E1E1E;
     color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: 12px;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
     font-weight: bold;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 QPushButton:hover {
     background-color: #2C2C2C;
-    border: 1.5px solid #00FFFF;
+    border: 2px solid #00FFFF;
     color: #00FFFF;
 }
 
 QPushButton:pressed {
     background-color: #111;
-    border: 1.5px solid #008B8B;
+    border: 2px solid #008B8B;
     color: #008B8B;
 }
 
 QPushButton:disabled {
     background-color: #1E1E1E;
-    border: 1.5px solid #2E2E2E;
+    border: 2px solid #2E2E2E;
     color: #555;
 }
 </string>
        </property>
        <property name="text">
-        <string/>
+        <string>Load Image</string>
        </property>
        <property name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/icons/icons/rotateright.png</normaloff>:/icons/icons/rotateright.png</iconset>
+         <normaloff>:/icons/icons/loadimage.png</normaloff>:/icons/icons/loadimage.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>24</width>
-         <height>17</height>
+         <width>20</width>
+         <height>20</height>
         </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" rowspan="2" colspan="2">
+      <widget class="ImageLabel" name="imageLabel">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Plain</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="deleteButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #00FFFF;
+    color: #00FFFF;
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+    color: #008B8B;
+}
+
+QPushButton:disabled {
+    background-color: #1E1E1E;
+    border: 2px solid #2E2E2E;
+    color: #555;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/deleteimage.png</normaloff>:/icons/icons/deleteimage.png</iconset>
        </property>
       </widget>
      </item>
@@ -2695,6 +2695,44 @@ QRadioButton::indicator:checked:disabled {
     background-clip: border;
     aspect ratio
     }</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="themeToggleButton">
+    <property name="geometry">
+     <rect>
+      <x>1250</x>
+      <y>700</y>
+      <width>54</width>
+      <height>54</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #1E1E1E;
+    border: 2px solid #00FFFF;
+    border-radius: 25px;
+    min-width: 50px;
+    max-width: 50px;
+    min-height: 50px;
+    max-height: 50px;
+}
+
+QPushButton:hover {
+    background-color: #2C2C2C;
+    border: 2px solid #33FFFF;
+    transform: scale(1.1);
+}
+
+QPushButton:pressed {
+    background-color: #111;
+    border: 2px solid #008B8B;
+}</string>
+    </property>
+    <property name="text">
+     <string>🌙</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

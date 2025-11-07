@@ -7,6 +7,9 @@
 #include <QPixmap>
 #include "ImageLabel.h"
 #include <QPushButton>
+#include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
+#include <QEasingCurve>
 using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -96,6 +99,8 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event);
 
+    void onThemeToggleClicked();
+
 
 
 private:
@@ -122,5 +127,15 @@ private:
 
     bool cropMode = false;
     QPoint cropStart, cropEnd;
+
+    bool isDarkMode = true;
+    void applyTheme(bool darkMode);
+    void animateThemeTransition();
+    void updateButtonStyles(bool darkMode);
+    void updateButtonIcons(bool darkMode);
+    QString getButtonStylesheet(bool darkMode, bool isSmall = false);
+    QString getThemeStylesheet(bool darkMode);
+    QString getDarkModeStylesheet();
+    QString getLightModeStylesheet();
 };
 #endif

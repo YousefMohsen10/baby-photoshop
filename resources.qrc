@@ -30,5 +30,34 @@
         <file>icons/rotateright.png</file>
         <file>icons/apply.png</file>
         <file>icons/pixify.png</file>
+        <file>icons/dark_apply.png</file>
+        <file>icons/dark_blackandwhite.png</file>
+        <file>icons/dark_blur.png</file>
+        <file>icons/dark_brightness.png</file>
+        <file>icons/dark_clearfilters.png</file>
+        <file>icons/dark_crop.png</file>
+        <file>icons/dark_deleteimage.png</file>
+        <file>icons/dark_edgedetection.png</file>
+        <file>icons/dark_flip.png</file>
+        <file>icons/dark_frame.png</file>
+        <file>icons/dark_grayscale.png</file>
+        <file>icons/dark_infrared.png</file>
+        <file>icons/dark_invert.png</file>
+        <file>icons/dark_loadimage.png</file>
+        <file>icons/dark_merge.png</file>
+        <file>icons/dark_neon.png</file>
+        <file>icons/dark_nightpurple-white.png</file>
+        <file>icons/dark_oilpaining.png</file>
+        <file>icons/dark_OldTV.png</file>
+        <file>icons/dark_redo.png</file>
+        <file>icons/dark_resize.png</file>
+        <file>icons/dark_rotateleft.png</file>
+        <file>icons/dark_rotateright.png</file>
+        <file>icons/dark_saveimage.png</file>
+        <file>icons/dark_shake.png</file>
+        <file>icons/dark_skew.png</file>
+        <file>icons/dark_sunlight glow.png</file>
+        <file>icons/dark_undo.png</file>
+        <file>icons/dark_water wave.png</file>
     </qresource>
 </RCC>

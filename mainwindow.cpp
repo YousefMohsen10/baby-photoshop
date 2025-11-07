@@ -15,6 +15,11 @@
 #include <QShortcut>
 #include <QKeySequence>
 #include "ImageLabel.h"
+#include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
+#include <QEasingCurve>
+#include <QLabel>
+#include <QIcon>
 using namespace std;
 
 
@@ -39,9 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
     undoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z), this);
     connect(undoShortcut, &QShortcut::activated, this, &MainWindow::onUndoButtonClicked);
 
-    ui->imageLabel->setText("<span style='font-size:20px; color:white; font-weight:bold;'>No image loaded</span>");
+    // Initial image label setup - will be themed by applyTheme
+    ui->imageLabel->setText("No image loaded");
     ui->imageLabel->setAlignment(Qt::AlignCenter);
-    ui->imageLabel->setStyleSheet("background-color: #2e2e2e; border-radius: 10px;");
 
     saveShortcut->setEnabled(false);
     deleteShortcut->setEnabled(false);
@@ -61,12 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->frameWidget->hide();
     disableAll();
 
-    this->setStyleSheet(
-        "QMainWindow {"
-        "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-        "stop:0 #0A0A0A, stop:1 #007A7A);"
-        "}"
-        );
+    // Initial theme will be applied in applyTheme call
 
     connect(ui->loadButton, &QPushButton::clicked, this, &MainWindow::onLoadImageClicked);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onSaveButtonClicked);
@@ -165,6 +165,12 @@ MainWindow::MainWindow(QWidget *parent)
         hideAllFilterMenus(false);
         ui->frameWidget->show();
     });
+
+    // Theme toggle button
+    connect(ui->themeToggleButton, &QPushButton::clicked, this, &MainWindow::onThemeToggleClicked);
+    
+    // Initialize with dark mode
+    applyTheme(true);
 }
 
 MainWindow::~MainWindow()
@@ -244,9 +250,11 @@ void MainWindow::onDeleteButtonClicked()
     history.clear();
     hideAllFilterMenus(false);
     ui->imageLabel->clear();
-    ui->imageLabel->setText("<span style='font-size:20px; color:white; font-weight:bold;'>No image loaded</span>");
+    QString textColor = isDarkMode ? "white" : "#1A1A1A";
+    QString bgColor = isDarkMode ? "#2e2e2e" : "#E8E8E8";
+    ui->imageLabel->setText(QString("<span style='font-size:20px; color:%1; font-weight:bold;'>No image loaded</span>").arg(textColor));
     ui->imageLabel->setAlignment(Qt::AlignCenter);
-    ui->imageLabel->setStyleSheet("background-color: #2e2e2e; border-radius: 10px;");
+    ui->imageLabel->setStyleSheet(QString("background-color: %1; border-radius: 10px;").arg(bgColor));
     disableAll();
 }
 
@@ -810,4 +818,630 @@ void MainWindow::hideAllFilterMenus(bool visible){
     ui->frameWidget->hide();
     ui->imageLabel->setCropping(false);
     toggleFlipOptions(visible);
+}
+
+void MainWindow::onThemeToggleClicked() {
+    isDarkMode = !isDarkMode;
+    animateThemeTransition();
+}
+
+void MainWindow::animateThemeTransition() {
+    // Create fade animation for smoother transition
+    QPropertyAnimation *fadeAnimation = new QPropertyAnimation(this, "windowOpacity");
+    fadeAnimation->setDuration(200);
+    fadeAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+    fadeAnimation->setStartValue(1.0);
+    fadeAnimation->setEndValue(0.7);
+    
+    // Animate button with rotation-like effect
+    QPropertyAnimation *buttonAnimation = new QPropertyAnimation(ui->themeToggleButton, "geometry");
+    buttonAnimation->setDuration(300);
+    buttonAnimation->setEasingCurve(QEasingCurve::InOutBack);
+    
+    QRect startRect = ui->themeToggleButton->geometry();
+    QRect endRect = startRect;
+    
+    // Scale animation
+    buttonAnimation->setStartValue(startRect);
+    endRect.setWidth(startRect.width() + 8);
+    endRect.setHeight(startRect.height() + 8);
+    endRect.moveLeft(startRect.left() - 4);
+    endRect.moveTop(startRect.top() - 4);
+    buttonAnimation->setKeyValueAt(0.5, endRect);
+    buttonAnimation->setEndValue(startRect);
+    
+    // Apply theme in the middle of animation
+    QTimer::singleShot(100, this, [this]() {
+        applyTheme(isDarkMode);
+        
+        // Fade back in
+        QPropertyAnimation *fadeIn = new QPropertyAnimation(this, "windowOpacity");
+        fadeIn->setDuration(200);
+        fadeIn->setEasingCurve(QEasingCurve::InOutQuad);
+        fadeIn->setStartValue(0.7);
+        fadeIn->setEndValue(1.0);
+        fadeIn->start(QAbstractAnimation::DeleteWhenStopped);
+    });
+    
+    fadeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    buttonAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void MainWindow::applyTheme(bool darkMode) {
+    isDarkMode = darkMode;
+    
+    // Update button icon and style
+    ui->themeToggleButton->setText(darkMode ? "🌙" : "☀️");
+    QString buttonStyle = darkMode ? 
+        "QPushButton {"
+        "background-color: #1E1E1E;"
+        "border: 2px solid #00FFFF;"
+        "border-radius: 25px;"
+        "min-width: 50px;"
+        "max-width: 50px;"
+        "min-height: 50px;"
+        "max-height: 50px;"
+        "font-size: 20px;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #2C2C2C;"
+        "border: 2px solid #33FFFF;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #111;"
+        "border: 2px solid #008B8B;"
+        "}"
+        :
+        "QPushButton {"
+        "background-color: #F5F5F5;"
+        "border: 2px solid #4A90E2;"
+        "border-radius: 25px;"
+        "min-width: 50px;"
+        "max-width: 50px;"
+        "min-height: 50px;"
+        "max-height: 50px;"
+        "font-size: 20px;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #E0E0E0;"
+        "border: 2px solid #6BA3E8;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #D0D0D0;"
+        "border: 2px solid #357ABD;"
+        "}";
+    ui->themeToggleButton->setStyleSheet(buttonStyle);
+    
+    // Update main window background
+    QString mainBg = darkMode ?
+        "QMainWindow {"
+        "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #0A0A0A, stop:1 #007A7A);"
+        "}"
+        :
+        "QMainWindow {"
+        "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #E8E8E8, stop:1 #87CEEB);"
+        "}";
+    
+    // Apply stylesheet - This affects labels, sliders, spinboxes, checkboxes, and radiobuttons
+    this->setStyleSheet(mainBg + getThemeStylesheet(darkMode));
+    
+    // Update all button styles
+    updateButtonStyles(darkMode);
+    
+    // Update all button icons
+    updateButtonIcons(darkMode);
+    
+    // Update image label background
+    QString imageLabelStyle = darkMode ?
+        "background-color: #2e2e2e; border-radius: 10px;"
+        :
+        "background-color: #E8E8E8; border-radius: 10px;";
+    if (ui->imageLabel->text().contains("No image loaded")) {
+        QString textColor = darkMode ? "white" : "#1A1A1A";
+        ui->imageLabel->setText(QString("<span style='font-size:20px; color:%1; font-weight:bold;'>No image loaded</span>").arg(textColor));
+        ui->imageLabel->setStyleSheet(imageLabelStyle);
+    }
+    
+    // Update size label if visible
+    if (ui->sizeLabel->isVisible()) {
+        QString sizeLabelStyle = darkMode ?
+            "QLabel {"
+            "background-color: #1E1E1E;"
+            "color: white;"
+            "border: 1.5px solid #2E2E2E;"
+            "border-radius: 4px;"
+            "padding: 2px 4px;"
+            "font-size: 11px;"
+            "font-weight: bold;"
+            "letter-spacing: 0.3px;"
+            "qproperty-alignment: 'AlignCenter';"
+            "}"
+            :
+            "QLabel {"
+            "background-color: #F5F5F5;"
+            "color: #1A1A1A;"
+            "border: 1.5px solid #CCCCCC;"
+            "border-radius: 4px;"
+            "padding: 2px 4px;"
+            "font-size: 11px;"
+            "font-weight: bold;"
+            "letter-spacing: 0.3px;"
+            "qproperty-alignment: 'AlignCenter';"
+            "}";
+        ui->sizeLabel->setStyleSheet(sizeLabelStyle);
+    }
+}
+
+void MainWindow::updateButtonStyles(bool darkMode) {
+    // Get all buttons and update their styles
+    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
+    
+    for (QPushButton* button : buttons) {
+        // Skip theme toggle button as it's handled separately
+        if (button == ui->themeToggleButton) {
+            continue;
+        }
+        
+        // Check if it's a transparent button (like left/right rotate)
+        bool isTransparent = (button == ui->leftButton || button == ui->rightButton);
+        
+        if (isTransparent) {
+            // Keep transparent buttons with appropriate hover effects
+            QString transparentStyle = darkMode ?
+                "QPushButton {"
+                "background-color: transparent;"
+                "color: white;"
+                "border: none;"
+                "border-radius: 6px;"
+                "padding: 3px 10px;"
+                "font-size: 12px;"
+                "font-weight: bold;"
+                "letter-spacing: 0.5px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: rgba(44, 44, 44, 150);"
+                "border: 1.5px solid #00FFFF;"
+                "color: #00FFFF;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: rgba(17, 17, 17, 200);"
+                "border: 1.5px solid #008B8B;"
+                "color: #008B8B;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: transparent;"
+                "border: none;"
+                "color: #555;"
+                "}"
+                :
+                "QPushButton {"
+                "background-color: transparent;"
+                "color: #1A1A1A;"
+                "border: none;"
+                "border-radius: 6px;"
+                "padding: 3px 10px;"
+                "font-size: 12px;"
+                "font-weight: bold;"
+                "letter-spacing: 0.5px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: rgba(224, 224, 224, 150);"
+                "border: 1.5px solid #4A90E2;"
+                "color: #4A90E2;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: rgba(208, 208, 208, 200);"
+                "border: 1.5px solid #357ABD;"
+                "color: #357ABD;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: transparent;"
+                "border: none;"
+                "color: #999999;"
+                "}";
+            button->setStyleSheet(transparentStyle);
+        } else {
+            // Check if it's a small button (like undo/redo/flip buttons)
+            bool isSmall = (button == ui->undoButton || button == ui->redoButton ||
+                            button == ui->flipHButton || button == ui->flipVButton);
+            
+            // Check if it's a medium button (like load/save/delete/clear/apply buttons)
+            bool isMedium = (button == ui->loadButton || button == ui->saveButton || 
+                             button == ui->deleteButton || button == ui->clearButton ||
+                             button == ui->brightnessApply || button == ui->resizeApply ||
+                             button == ui->blurApply || button == ui->skewApply ||
+                             button == ui->mergeApply || button == ui->frameApply);
+            
+            QString style = getButtonStylesheet(darkMode, isSmall || isMedium);
+            button->setStyleSheet(style);
+        }
+    }
+}
+
+void MainWindow::updateButtonIcons(bool darkMode) {
+    // Helper function to get icon path
+    auto getIconPath = [&](const QString& baseName) -> QString {
+        if (darkMode) {
+            return ":/icons/icons/" + baseName;
+        } else {
+            // For light mode, use dark_ prefix (dark icons for light background)
+            return ":/icons/icons/dark_" + baseName;
+        }
+    };
+    
+    // Helper function to update icon while preserving size
+    auto updateIcon = [&](QPushButton* button, const QString& iconPath) {
+        if (button) {
+            QSize currentSize = button->iconSize();
+            button->setIcon(QIcon(iconPath));
+            if (!currentSize.isNull()) {
+                button->setIconSize(currentSize);
+            }
+        }
+    };
+    
+    // Update all buttons with icons - preserve icon sizes
+    updateIcon(ui->loadButton, getIconPath("loadimage.png"));
+    updateIcon(ui->saveButton, getIconPath("saveimage.png"));
+    updateIcon(ui->deleteButton, getIconPath("deleteimage.png"));
+    updateIcon(ui->clearButton, getIconPath("clearfilters.png"));
+    updateIcon(ui->undoButton, getIconPath("undo.png"));
+    updateIcon(ui->redoButton, getIconPath("redo.png"));
+    updateIcon(ui->grayButton, getIconPath("grayscale.png"));
+    updateIcon(ui->blackwhitebutton, getIconPath("blackandwhite.png"));
+    updateIcon(ui->invertbutton, getIconPath("invert.png"));
+    updateIcon(ui->oldtvbutton, getIconPath("OldTV.png"));
+    updateIcon(ui->oilpaintButton, getIconPath("oilpaining.png"));
+    updateIcon(ui->edgesButton, getIconPath("edgedetection.png"));
+    updateIcon(ui->infraredButton, getIconPath("infrared.png"));
+    updateIcon(ui->purpleButton, getIconPath("nightpurple-white.png"));
+    updateIcon(ui->sunlightButton, getIconPath("sunlight glow.png"));
+    updateIcon(ui->leftButton, getIconPath("rotateleft.png"));
+    updateIcon(ui->rightButton, getIconPath("rotateright.png"));
+    updateIcon(ui->flipButton, getIconPath("flip.png"));
+    updateIcon(ui->cropButton, getIconPath("crop.png"));
+    updateIcon(ui->brightnessButton, getIconPath("brightness.png"));
+    updateIcon(ui->resizeButton, getIconPath("resize.png"));
+    updateIcon(ui->blurButton, getIconPath("blur.png"));
+    updateIcon(ui->skewButton, getIconPath("skew.png"));
+    updateIcon(ui->mergeButton, getIconPath("merge.png"));
+    updateIcon(ui->neonButton, getIconPath("neon.png"));
+    updateIcon(ui->waveButton, getIconPath("water wave.png"));
+    updateIcon(ui->frameButton, getIconPath("frame.png"));
+    updateIcon(ui->shakeButton, getIconPath("shake.png"));
+    // Apply buttons
+    updateIcon(ui->brightnessApply, getIconPath("apply.png"));
+    updateIcon(ui->resizeApply, getIconPath("apply.png"));
+    updateIcon(ui->blurApply, getIconPath("apply.png"));
+    updateIcon(ui->skewApply, getIconPath("apply.png"));
+    updateIcon(ui->mergeApply, getIconPath("apply.png"));
+    updateIcon(ui->frameApply, getIconPath("apply.png"));
+}
+
+QString MainWindow::getButtonStylesheet(bool darkMode, bool isSmall) {
+    if (darkMode) {
+        if (isSmall) {
+            return QString(
+                "QPushButton {"
+                "background-color: #1E1E1E;"
+                "color: white;"
+                "border: 1.5px solid #2E2E2E;"
+                "border-radius: 7px;"
+                "padding: 4px 10px;"
+                "font-size: 13px;"
+                "font-weight: bold;"
+                "letter-spacing: 0.5px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: #2C2C2C;"
+                "border: 1.5px solid #00FFFF;"
+                "color: #00FFFF;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: #111;"
+                "border: 1.5px solid #008B8B;"
+                "color: #008B8B;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: #1E1E1E;"
+                "border: 1.5px solid #2E2E2E;"
+                "color: #555;"
+                "}"
+            );
+        } else {
+            return QString(
+                "QPushButton {"
+                "background-color: #1E1E1E;"
+                "color: white;"
+                "border: 2px solid #2E2E2E;"
+                "border-radius: 10px;"
+                "padding: 8px 16px;"
+                "font-size: 15px;"
+                "font-weight: bold;"
+                "letter-spacing: 1px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: #2C2C2C;"
+                "border: 2px solid #00FFFF;"
+                "color: #00FFFF;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: #111;"
+                "border: 2px solid #008B8B;"
+                "color: #008B8B;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: #1E1E1E;"
+                "border: 2px solid #2E2E2E;"
+                "color: #555;"
+                "}"
+            );
+        }
+    } else {
+        if (isSmall) {
+            return QString(
+                "QPushButton {"
+                "background-color: #F5F5F5;"
+                "color: #1A1A1A;"
+                "border: 1.5px solid #CCCCCC;"
+                "border-radius: 7px;"
+                "padding: 4px 10px;"
+                "font-size: 13px;"
+                "font-weight: bold;"
+                "letter-spacing: 0.5px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: #E0E0E0;"
+                "border: 1.5px solid #4A90E2;"
+                "color: #4A90E2;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: #D0D0D0;"
+                "border: 1.5px solid #357ABD;"
+                "color: #357ABD;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: #F5F5F5;"
+                "border: 1.5px solid #CCCCCC;"
+                "color: #999999;"
+                "}"
+            );
+        } else {
+            return QString(
+                "QPushButton {"
+                "background-color: #F5F5F5;"
+                "color: #1A1A1A;"
+                "border: 2px solid #CCCCCC;"
+                "border-radius: 10px;"
+                "padding: 8px 16px;"
+                "font-size: 15px;"
+                "font-weight: bold;"
+                "letter-spacing: 1px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color: #E0E0E0;"
+                "border: 2px solid #4A90E2;"
+                "color: #4A90E2;"
+                "}"
+                "QPushButton:pressed {"
+                "background-color: #D0D0D0;"
+                "border: 2px solid #357ABD;"
+                "color: #357ABD;"
+                "}"
+                "QPushButton:disabled {"
+                "background-color: #F5F5F5;"
+                "border: 2px solid #CCCCCC;"
+                "color: #999999;"
+                "}"
+            );
+        }
+    }
+}
+
+QString MainWindow::getThemeStylesheet(bool darkMode) {
+    if (darkMode) {
+        return getDarkModeStylesheet();
+    } else {
+        return getLightModeStylesheet();
+    }
+}
+
+QString MainWindow::getDarkModeStylesheet() {
+    return QString(
+        "QPushButton {"
+        "background-color: #1E1E1E;"
+        "color: white;"
+        "border: 2px solid #2E2E2E;"
+        "border-radius: 10px;"
+        "padding: 8px 16px;"
+        "font-size: 15px;"
+        "font-weight: bold;"
+        "letter-spacing: 1px;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #2C2C2C;"
+        "border: 2px solid #00FFFF;"
+        "color: #00FFFF;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #111;"
+        "border: 2px solid #008B8B;"
+        "color: #008B8B;"
+        "}"
+        "QPushButton:disabled {"
+        "background-color: #1E1E1E;"
+        "border: 2px solid #2E2E2E;"
+        "color: #555;"
+        "}"
+        "QLabel {"
+        "background-color: #1E1E1E;"
+        "color: white;"
+        "border: 1.5px solid #2E2E2E;"
+        "border-radius: 4px;"
+        "padding: 2px 4px;"
+        "font-size: 13px;"
+        "font-weight: bold;"
+        "}"
+        "QSlider::groove:horizontal {"
+        "border: 1px solid #333;"
+        "background: #1e1e1e;"
+        "height: 6px;"
+        "border-radius: 3px;"
+        "}"
+        "QSlider::sub-page:horizontal:enabled {"
+        "background: #00ffff;"
+        "border: 1px solid #00ffff;"
+        "height: 6px;"
+        "border-radius: 3px;"
+        "}"
+        "QSlider::handle:horizontal:enabled {"
+        "background: #00ffff;"
+        "border: 1px solid #00ffff;"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 7px;"
+        "}"
+        "QSpinBox {"
+        "background-color: #1E1E1E;"
+        "color: white;"
+        "border: 2px solid #2E2E2E;"
+        "border-radius: 5px;"
+        "padding: 3px;"
+        "}"
+        "QSpinBox:hover {"
+        "border: 2px solid #00FFFF;"
+        "}"
+        "QCheckBox {"
+        "font-size: 12px;"
+        "color: #cccccc;"
+        "spacing: 6px;"
+        "}"
+        "QCheckBox::indicator {"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 3px;"
+        "border: 2px solid #555;"
+        "background-color: #1e1e1e;"
+        "}"
+        "QCheckBox::indicator:checked {"
+        "background-color: #00ffff;"
+        "border: 2px solid #00ffff;"
+        "}"
+        "QRadioButton {"
+        "font-size: 12px;"
+        "color: #cccccc;"
+        "spacing: 6px;"
+        "}"
+        "QRadioButton::indicator {"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 7px;"
+        "border: 2px solid #555;"
+        "background-color: #1e1e1e;"
+        "}"
+        "QRadioButton::indicator:checked {"
+        "background-color: #00ffff;"
+        "border: 2px solid #00ffff;"
+        "}"
+    );
+}
+
+QString MainWindow::getLightModeStylesheet() {
+    return QString(
+        "QPushButton {"
+        "background-color: #F5F5F5;"
+        "color: #1A1A1A;"
+        "border: 2px solid #CCCCCC;"
+        "border-radius: 10px;"
+        "padding: 8px 16px;"
+        "font-size: 15px;"
+        "font-weight: bold;"
+        "letter-spacing: 1px;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #E0E0E0;"
+        "border: 2px solid #4A90E2;"
+        "color: #4A90E2;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #D0D0D0;"
+        "border: 2px solid #357ABD;"
+        "color: #357ABD;"
+        "}"
+        "QPushButton:disabled {"
+        "background-color: #F5F5F5;"
+        "border: 2px solid #CCCCCC;"
+        "color: #999999;"
+        "}"
+        "QLabel {"
+        "background-color: #F5F5F5;"
+        "color: #1A1A1A;"
+        "border: 1.5px solid #CCCCCC;"
+        "border-radius: 4px;"
+        "padding: 2px 4px;"
+        "font-size: 13px;"
+        "font-weight: bold;"
+        "}"
+        "QSlider::groove:horizontal {"
+        "border: 1px solid #AAA;"
+        "background: #E0E0E0;"
+        "height: 6px;"
+        "border-radius: 3px;"
+        "}"
+        "QSlider::sub-page:horizontal:enabled {"
+        "background: #4A90E2;"
+        "border: 1px solid #4A90E2;"
+        "height: 6px;"
+        "border-radius: 3px;"
+        "}"
+        "QSlider::handle:horizontal:enabled {"
+        "background: #4A90E2;"
+        "border: 1px solid #4A90E2;"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 7px;"
+        "}"
+        "QSpinBox {"
+        "background-color: #FFFFFF;"
+        "color: #1A1A1A;"
+        "border: 2px solid #CCCCCC;"
+        "border-radius: 5px;"
+        "padding: 3px;"
+        "}"
+        "QSpinBox:hover {"
+        "border: 2px solid #4A90E2;"
+        "}"
+        "QCheckBox {"
+        "font-size: 12px;"
+        "color: #333333;"
+        "spacing: 6px;"
+        "}"
+        "QCheckBox::indicator {"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 3px;"
+        "border: 2px solid #999;"
+        "background-color: #FFFFFF;"
+        "}"
+        "QCheckBox::indicator:checked {"
+        "background-color: #4A90E2;"
+        "border: 2px solid #4A90E2;"
+        "}"
+        "QRadioButton {"
+        "font-size: 12px;"
+        "color: #333333;"
+        "spacing: 6px;"
+        "}"
+        "QRadioButton::indicator {"
+        "width: 14px;"
+        "height: 14px;"
+        "border-radius: 7px;"
+        "border: 2px solid #999;"
+        "background-color: #FFFFFF;"
+        "}"
+        "QRadioButton::indicator:checked {"
+        "background-color: #4A90E2;"
+        "border: 2px solid #4A90E2;"
+        "}"
+    );
 }

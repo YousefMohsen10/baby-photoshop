@@ -63,9 +63,12 @@ Note: This runs the console version of the app, useful for testing algorithms wi
 Tip: All sliders, buttons, and menus update the image in real-time. Remember to click “Apply” to save changes.
 
 ## Screenshots
-<img width="1622" height="1012" alt="image" src="https://github.com/user-attachments/assets/1f1a9591-0c8a-4d67-8546-dcf6ca715c44" />
-<img width="1626" height="1010" alt="image" src="https://github.com/user-attachments/assets/7fed28a4-528d-46df-b640-d03ae81435ac" />
-<img width="1626" height="1011" alt="image" src="https://github.com/user-attachments/assets/80ad99e3-bd68-46ad-9a8d-c48c52d7c507" />
+<img width="1636" height="1022" alt="Screenshot 2025-11-23 170425" src="https://github.com/user-attachments/assets/fb97cf05-4ceb-46f0-ac0c-49c1cdd93a50" />
+<img width="1630" height="1021" alt="Screenshot 2025-11-23 170745" src="https://github.com/user-attachments/assets/d7bb886b-ba8d-48a1-97da-d45d856b1fed" />
+<img width="1627" height="1022" alt="image" src="https://github.com/user-attachments/assets/819af143-0c2c-4805-8c82-3e0c631f0367" />
+<img width="1635" height="1016" alt="image" src="https://github.com/user-attachments/assets/a627c664-a968-4ce7-ab67-db9c8dfe2254" />
+<img width="1637" height="1017" alt="image" src="https://github.com/user-attachments/assets/186ecf52-25a9-40f0-a032-dd10b97b5270" />
+
 
 
 ## Credits
